@@ -29,9 +29,9 @@ public class OrganizationService {
         organizations.removeIf(t -> t.getName().equals(name));
     }
 
-    public void update(Organization organizationUpdated) {
+    public void update(String name, Organization organizationUpdated) {
         organizations.stream()
-                .filter(organization -> organizationUpdated.getName().equals(organization.getName()))
-                .forEach(organization -> organization = organizationUpdated);
+                .filter(organization -> name.equals(organization.getName()))
+                .forEach(organization -> organizations.set(organizations.indexOf(organization), organizationUpdated));
     }
 }

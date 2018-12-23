@@ -1,7 +1,6 @@
 package com.krzysztof.studio.organization;
 
 import com.krzysztof.studio.model.Organization;
-import com.krzysztof.studio.organization.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +30,8 @@ public class OrganizationController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/organizations/{name}")
-    public void update(Organization organization) {
-        organizationService.update(organization);
+    public void update(String name, Organization organization) {
+        organizationService.update(name, organization);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/organizations/{name}")
