@@ -32,6 +32,6 @@ public class OrganizationService {
     public void update(Organization organizationUpdated) {
         organizations.stream()
                 .filter(organization -> organizationUpdated.getName().equals(organization.getName()))
-                .forEach(o -> organizations.remove(organizationUpdated.getName()));
+                .forEach(organization -> organization = organizationUpdated);
     }
 }
