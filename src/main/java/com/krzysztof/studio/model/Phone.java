@@ -1,8 +1,10 @@
 package com.krzysztof.studio.model;
 
-public class Phone {
+import lombok.Data;
 
-    private byte internalNumber;
+public @Data class Phone {
+
+    private int internalNumber;
     private String externalNumber;
     private PhoneInterface phoneInterface;
 }

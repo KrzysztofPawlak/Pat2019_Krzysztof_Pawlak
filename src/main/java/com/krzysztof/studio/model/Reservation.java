@@ -1,10 +1,12 @@
 package com.krzysztof.studio.model;
 
-import java.util.Date;
+import lombok.Data;
 
-public class Reservation {
+import java.time.LocalDateTime;
+
+public @Data class Reservation {
 
     private String id;
-    private Date reservationFrom;
-    private Date reservationTo;
+    private LocalDateTime reservationFrom;
+    private LocalDateTime reservationTo;
 }

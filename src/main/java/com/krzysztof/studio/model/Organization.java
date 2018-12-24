@@ -1,14 +1,9 @@
 package com.krzysztof.studio.model;
 
-public class Organization {
+import lombok.Data;
+
+public @Data class Organization {
 
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

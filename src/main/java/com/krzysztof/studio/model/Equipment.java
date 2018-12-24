@@ -1,6 +1,8 @@
 package com.krzysztof.studio.model;
 
-public class Equipment {
+import lombok.Data;
+
+public @Data class Equipment {
 
     private String projectorName;
     private boolean phoneAvailable;
