@@ -1,8 +1,9 @@
 package com.krzysztof.studio.organization;
 
 import com.krzysztof.studio.model.Organization;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrganizationServiceTest {
 
@@ -10,7 +11,7 @@ public class OrganizationServiceTest {
 
     @Test
     public void checkInitialSize() {
-        Assert.assertTrue(service.read().size() == 0);
+        assertThat(service.read().size() == 0).isTrue();
     }
 
     private Organization buildSampleEntry(String name) {
@@ -24,14 +25,14 @@ public class OrganizationServiceTest {
         service.create(buildSampleEntry("foo"));
         service.create(buildSampleEntry("bar"));
         service.create(buildSampleEntry("baz"));
-        Assert.assertTrue(service.read().size() == 3);
+        assertThat(service.read().size() == 3).isTrue();
     }
 
     @Test
     public void checkNameOfAddedEntry() {
         var name = "foo";
         service.create(buildSampleEntry(name));
-        Assert.assertTrue(service.read(name).getName().equals(name));
+        assertThat(service.read(name).getName().equals(name)).isTrue();
     }
 
     @Test
@@ -39,7 +40,7 @@ public class OrganizationServiceTest {
         var sampleOrganization = buildSampleEntry("foo");
         service.create(sampleOrganization);
         service.delete(sampleOrganization.getName());
-        Assert.assertTrue(service.read().size() == 0);
+        assertThat(service.read().size() == 0).isTrue();
     }
 
     @Test
@@ -50,6 +51,6 @@ public class OrganizationServiceTest {
         var sampleUpdatedOrganization = buildSampleEntry(updatedName);
         service.create(sampleOrganization);
         service.update(name, sampleUpdatedOrganization);
-        Assert.assertTrue(service.read(updatedName).getName().equals("bar"));
+        assertThat(service.read(updatedName).getName().equals("bar")).isTrue();
     }
 }
