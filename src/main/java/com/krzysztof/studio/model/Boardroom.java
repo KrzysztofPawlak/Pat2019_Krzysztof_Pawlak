@@ -13,6 +13,7 @@ public @Data class Boardroom {
     @Size(min = 2, message = "Too few characters. Minimum is 2.")
     @Size(min = 10, message = "Too many characters. Maximum is 20.")
     private String id;
+    private String organizationName;
     @InRange(
             min = 0,
             max = 10,

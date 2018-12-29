@@ -2,7 +2,10 @@ package com.krzysztof.studio;
 
 import com.krzysztof.studio.boardroom.BoardroomService;
 import com.krzysztof.studio.model.Boardroom;
+import com.krzysztof.studio.model.Equipment;
 import com.krzysztof.studio.model.Organization;
+import com.krzysztof.studio.model.Phone;
+import com.krzysztof.studio.model.PhoneInterface;
 import com.krzysztof.studio.model.Reservation;
 import com.krzysztof.studio.organization.OrganizationService;
 import com.krzysztof.studio.reservation.ReservationService;
@@ -41,17 +44,36 @@ public class MainApplication {
 		var boardroom = new Boardroom();
 		boardroom.setName("salka blue");
 		boardroom.setId("1.33");
+		boardroom.setOrganizationName("foo");
 		boardroom.setLevel(0);
 		boardroom.setAvailable(true);
 		boardroom.setSeats(10);
 		boardroom.setSunbeds(10);
 		boardroom.setHammocks(10);
+		boardroom.setEquipment(createSampleEquipment());
 		return boardroom;
+	}
+
+	private Equipment createSampleEquipment() {
+		var equipment = new Equipment();
+		equipment.setProjectorName("foo");
+		equipment.setPhoneAvailable(true);
+		equipment.setPhone(createSamplePhone());
+		return equipment;
+	}
+
+	private Phone createSamplePhone() {
+		var phone = new Phone();
+		phone.setExternalNumber("+12 123456789");
+		phone.setInternalNumber(99);
+		phone.setPhoneInterface(PhoneInterface.USB);
+		return phone;
 	}
 
 	private Reservation createSampleReservation() {
 		var reservation = new Reservation();
 		reservation.setId("foo");
+		reservation.setBoardroomName("salka blue");
 		reservation.setReservationFrom(LocalDateTime.now());
 		reservation.setReservationTo(LocalDateTime.now());
 		return reservation;
