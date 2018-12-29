@@ -1,8 +1,8 @@
 package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.model.Boardroom;
-import com.krzysztof.studio.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,8 @@ public class BoardroomController {
     private BoardroomService boardroomService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/boardrooms")
-    public void create(Boardroom boardroom) {
-        boardroomService.create(boardroom);
+    public ResponseEntity<?> create(Boardroom boardroom) {
+       return boardroomService.create(boardroom);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/boardrooms")

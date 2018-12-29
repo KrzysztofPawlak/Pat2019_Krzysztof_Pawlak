@@ -2,6 +2,7 @@ package com.krzysztof.studio.reservation;
 
 import com.krzysztof.studio.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +16,8 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/reservations")
-    public void create(Reservation reservation) {
-        reservationService.create(reservation);
+    public ResponseEntity<?> create(Reservation reservation) {
+        return reservationService.create(reservation);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/reservations")

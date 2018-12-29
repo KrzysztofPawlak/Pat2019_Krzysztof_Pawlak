@@ -1,6 +1,8 @@
 package com.krzysztof.studio.reservation;
 
 import com.krzysztof.studio.model.Reservation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,8 +13,14 @@ public class ReservationService {
 
     private List<Reservation> reservations = new ArrayList<>();
 
-    public void create(Reservation reservation) {
-        reservations.add(reservation);
+    public ResponseEntity<?> create(Reservation reservation) {
+
+        if (!exists(reservation)) {
+            reservations.add(reservation);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("reservation already exists", HttpStatus.BAD_REQUEST);
     }
 
     public List<Reservation> read() {
@@ -33,5 +41,9 @@ public class ReservationService {
         reservations.stream()
                 .filter(reservation -> id.equals(reservation.getId()))
                 .forEach(reservation -> reservations.set(reservations.indexOf(reservation), reservationUpdated));
+    }
+
+    public boolean exists(Reservation reservation) {
+        return read(reservation.getId()) != null;
     }
 }

@@ -2,6 +2,8 @@ package com.krzysztof.studio.organization;
 
 import com.krzysztof.studio.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +17,8 @@ public class OrganizationController {
     private OrganizationService organizationService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/organizations")
-    public void create(Organization organization) {
-        organizationService.create(organization);
+    public ResponseEntity<?> create(@RequestBody Organization organization) {
+        return organizationService.create(organization);
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/organizations")

@@ -1,6 +1,8 @@
 package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.model.Boardroom;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,8 +13,14 @@ public class BoardroomService {
 
     private List<Boardroom> boardrooms = new ArrayList<>();
 
-    public void create(Boardroom boardroom) {
-        boardrooms.add(boardroom);
+    public ResponseEntity<?> create(Boardroom boardroom) {
+
+        if (!exists(boardroom)) {
+            boardrooms.add(boardroom);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("boardroom already exists", HttpStatus.BAD_REQUEST);
     }
 
     public List<Boardroom> read() {
@@ -33,5 +41,9 @@ public class BoardroomService {
         boardrooms.stream()
                 .filter(boardroom -> name.equals(boardroom.getName()))
                 .forEach(boardroom -> boardrooms.set(boardrooms.indexOf(boardroom), boardroomUpdated));
+    }
+
+    public boolean exists(Boardroom boardroom) {
+        return read(boardroom.getName()) != null;
     }
 }
