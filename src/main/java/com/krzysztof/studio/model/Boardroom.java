@@ -1,28 +1,57 @@
 package com.krzysztof.studio.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.krzysztof.studio.validation.InRange;
+import com.krzysztof.studio.validation.WhiteSpaceCheck;
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_ID_MAX_LENGTH;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_ID_MIN_LENGTH;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MAX_LEVEL;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MIN_LEVEL;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MAX_LENGTH;
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MIN_LENGTH;
 
 public @Data class Boardroom {
 
-    @Size(min = 2, message = "Too few characters. Minimum is 2.")
-    @Size(min = 10, message = "Too many characters. Maximum is 20.")
+    @NotNull
+    @WhiteSpaceCheck
+    @Size(min = BOARDROOM_NAME_MIN_LENGTH, message = "Not enough characters. Minimum is " + BOARDROOM_NAME_MIN_LENGTH + ".")
+    @Size(max = BOARDROOM_NAME_MAX_LENGTH, message = "Too many characters. Maximum is " + BOARDROOM_NAME_MAX_LENGTH + ".")
     private String name;
-    @Size(min = 2, message = "Too few characters. Minimum is 2.")
-    @Size(min = 10, message = "Too many characters. Maximum is 20.")
+    @JsonInclude(NON_NULL)
+    @WhiteSpaceCheck
+    @Size(min = BOARDROOM_ID_MIN_LENGTH, message = "Not enough characters. Minimum is " + BOARDROOM_ID_MIN_LENGTH + ".")
+    @Size(max = BOARDROOM_ID_MAX_LENGTH, message = "Too many characters. Maximum is " + BOARDROOM_ID_MAX_LENGTH + ".")
     private String id;
     private String organizationName;
     @InRange(
-            min = 0,
-            max = 10,
-            message = "Possibly level range is between 0-10."
+            min = BOARDROOM_MIN_LEVEL,
+            max = BOARDROOM_MAX_LEVEL,
+            message = "Possibly levels range is between " + BOARDROOM_MIN_LEVEL + " to " + BOARDROOM_MAX_LEVEL + "."
     )
     private int level;
     private boolean available;
-    private int seats;
-    private int sunbeds;
-    private int hammocks;
+    @NotNull
+    @PositiveOrZero
+    private Integer seats;
+    @NotNull
+    @PositiveOrZero
+    private Integer standingPlaces;
+    @JsonInclude(NON_DEFAULT)
+    @PositiveOrZero
+    private Integer sunbeds;
+    @JsonInclude(NON_DEFAULT)
+    @PositiveOrZero
+    private Integer hammocks;
+    @JsonInclude(NON_DEFAULT)
+    @Valid
     private Equipment equipment;
 }

@@ -66,7 +66,7 @@ public class MainApplication {
 		var phone = new Phone();
 		phone.setExternalNumber("+12 123456789");
 		phone.setInternalNumber(99);
-		phone.setPhoneInterface(PhoneInterface.USB);
+		phone.setPhoneInterface(PhoneInterface.USB.toString());
 		return phone;
 	}
 

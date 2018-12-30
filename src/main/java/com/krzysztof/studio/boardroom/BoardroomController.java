@@ -3,12 +3,16 @@ package com.krzysztof.studio.boardroom;
 import com.krzysztof.studio.model.Boardroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 public class BoardroomController {
 
@@ -16,7 +20,7 @@ public class BoardroomController {
     private BoardroomService boardroomService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/boardrooms")
-    public ResponseEntity<?> create(Boardroom boardroom) {
+    public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
        return boardroomService.create(boardroom);
     }
 

@@ -17,6 +17,7 @@ public class PhoneTest {
 
     private static final int VALID_INTERNAL_NUMBER = 99;
     private static final String VALID_EXTERNAL_NUMBER = "+12 123456789";
+    private static final String VALID_PHONE_INTERFACE = PhoneInterface.USB.toString();
 
     @Test
     void should_have_correct_external_number() {
@@ -68,6 +69,7 @@ public class PhoneTest {
         var phone = new Phone();
         phone.setInternalNumber(internalNumber);
         phone.setExternalNumber(externalNumber);
+        phone.setPhoneInterface(VALID_PHONE_INTERFACE);
         return phone;
     }
 }

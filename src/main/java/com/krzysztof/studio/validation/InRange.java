@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InRange {
-    String message() default "value is out of range";
+    String message() default "Value is out of range.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     int min() default Integer.MIN_VALUE;
