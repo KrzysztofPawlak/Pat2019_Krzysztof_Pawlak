@@ -1,5 +1,7 @@
 # Pat2019_Krzysztof_Pawlak
 
+requirements: Java 10
+
 # Build
 in repository directory
 ```javascript
