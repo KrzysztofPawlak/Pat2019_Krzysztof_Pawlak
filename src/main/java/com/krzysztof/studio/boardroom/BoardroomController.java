@@ -4,6 +4,7 @@ import com.krzysztof.studio.model.Boardroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,17 +31,17 @@ public class BoardroomController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/boardrooms/{name}")
-    public Boardroom read(String name) {
+    public Boardroom read(@PathVariable String name) {
         return boardroomService.read(name);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/boardrooms/{name}")
-    public void update(String name, Boardroom boardroom) {
+    public void update(@PathVariable String name, @RequestBody @Valid Boardroom boardroom) {
         boardroomService.update(name, boardroom);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/boardrooms/{name}")
-    public void delete(String name) {
+    public void delete(@PathVariable String name) {
         boardroomService.delete(name);
     }
 }

@@ -20,7 +20,7 @@ class Phone {
     @Max(value = PHONE_MAX_INTERNAL_NUMBER, message = "The max internal number must be less then " + PHONE_MAX_INTERNAL_NUMBER + ".")
     private Integer internalNumber;
     @JsonInclude(NON_DEFAULT)
-    @Pattern(regexp = ACCEPTABLE_EXTERNAL_NUMBER_FORMAT, message = "Incorrect external number.")
+    @Pattern(regexp = ACCEPTABLE_EXTERNAL_NUMBER_FORMAT, message = "Incorrect external number format.")
     private String externalNumber;
     @JsonInclude(NON_DEFAULT)
     @PhoneInterfaceEnum(enumClass = PhoneInterface.class)

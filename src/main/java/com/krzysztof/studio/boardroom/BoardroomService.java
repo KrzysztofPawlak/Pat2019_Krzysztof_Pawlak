@@ -20,7 +20,7 @@ public class BoardroomService {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("boardroom already exists", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Boardroom already exists.", HttpStatus.BAD_REQUEST);
     }
 
     public List<Boardroom> read() {

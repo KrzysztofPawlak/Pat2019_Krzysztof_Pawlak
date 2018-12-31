@@ -48,6 +48,7 @@ public class MainApplication {
 		boardroom.setLevel(0);
 		boardroom.setAvailable(true);
 		boardroom.setSeats(10);
+		boardroom.setStandingPlaces(10);
 		boardroom.setSunbeds(10);
 		boardroom.setHammocks(10);
 		boardroom.setEquipment(createSampleEquipment());

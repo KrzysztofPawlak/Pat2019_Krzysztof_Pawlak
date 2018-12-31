@@ -13,8 +13,8 @@ public @Data class Organization {
 
     @WhiteSpaceCheck
     @NotNull
-    @Size(min = ORGANIZATION_NAME_MIN_LENGTH, message = "Too few characters. Minimum is " + ORGANIZATION_NAME_MIN_LENGTH + ".")
-    @Size(max = ORGANIZATION_NAME_MAX_LENGTH, message = "Not enough characters. Maximum is " + ORGANIZATION_NAME_MAX_LENGTH + ".")
+    @Size(min = ORGANIZATION_NAME_MIN_LENGTH, message = "Not enough characters. Minimum is " + ORGANIZATION_NAME_MIN_LENGTH + ".")
+    @Size(max = ORGANIZATION_NAME_MAX_LENGTH, message = "Too many characters. Maximum is " + ORGANIZATION_NAME_MAX_LENGTH + ".")
     private String name;
 
 }
