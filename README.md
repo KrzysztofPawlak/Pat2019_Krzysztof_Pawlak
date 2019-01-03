@@ -4,12 +4,18 @@ requirements: Java 10
 
 # Build
 in repository directory
+
 ```javascript
-mvn clean install
+put in {$your_java_path} your path to dir with java 10
+example: gradle run -Dorg.gradle.java.home=/opt/jdk-10.0.1
+```
+```javascript
+gradle tasks -Dorg.gradle.java.home={$your_java_path}
+gradle build -Dorg.gradle.java.home={$your_java_path}
 ```
 # Run
 ```javascript
-java -jar target/Pat2019_Krzysztof_Pawlak-0.0.1-SNAPSHOT.jar
+gradle run -Dorg.gradle.java.home={$your_java_path}
 ```
 
 # Add new boardroom by using cURL
