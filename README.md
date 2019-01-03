@@ -2,20 +2,24 @@
 
 requirements: Java 10
 
+checked on: IntelliJ 2018.3.2, gradle 5.1
+
 # Build
 in repository directory
 
 ```javascript
-put in {$your_java_path} your path to dir with java 10
-example: gradle run -Dorg.gradle.java.home=/opt/jdk-10.0.1
-```
-```javascript
-gradle tasks -Dorg.gradle.java.home={$your_java_path}
-gradle build -Dorg.gradle.java.home={$your_java_path}
+gradle tasks
+gradle build
 ```
 # Run
 ```javascript
+gradle run
+```
+
+```javascript
+you can specify your gradle jvm version by puting in {$your_java_path} path to dir with java 10
 gradle run -Dorg.gradle.java.home={$your_java_path}
+example: gradle run -Dorg.gradle.java.home=/opt/jdk-10.0.1
 ```
 
 # Add new boardroom by using cURL
