@@ -33,7 +33,7 @@ dependencies {
 group = 'com.krzysztof.studio'
 version = '0.0.1-SNAPSHOT'
 description = 'Pat2019_Krzysztof_Pawlak'
-sourceCompatibility = '1.10'
+sourceCompatibility = '1.11'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
