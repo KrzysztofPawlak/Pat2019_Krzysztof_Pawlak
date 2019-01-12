@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @SpringBootApplication
 public class MainApplication {
@@ -58,6 +59,7 @@ public class MainApplication {
 	private Equipment createSampleEquipment() {
 		var equipment = new Equipment();
 		equipment.setProjectorName("foo");
+		equipment.setId(UUID.randomUUID());
 		equipment.setPhoneAvailable(true);
 		equipment.setPhone(createSamplePhone());
 		return equipment;
@@ -65,6 +67,7 @@ public class MainApplication {
 
 	private Phone createSamplePhone() {
 		var phone = new Phone();
+		phone.setId(UUID.randomUUID());
 		phone.setExternalNumber("+12 123456789");
 		phone.setInternalNumber(99);
 		phone.setPhoneInterface(PhoneInterface.USB.toString());
