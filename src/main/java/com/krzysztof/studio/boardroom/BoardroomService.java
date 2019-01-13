@@ -1,5 +1,6 @@
 package com.krzysztof.studio.boardroom;
 
+import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.Boardroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public class BoardroomService {
 
     public ResponseEntity<?> create(Boardroom boardroom) {
 
-        if (!boardroomRepository.existsById(boardroom.getId())) {
+        if (!exists(boardroom)) {
             boardroomRepository.save(boardroom);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
@@ -32,7 +33,7 @@ public class BoardroomService {
     }
 
     public Boardroom read(String name) {
-        return boardroomRepository.findById(name).orElseThrow();
+        return boardroomRepository.findById(name).orElseThrow(() -> new ResourceNotFoundException("No Boardrooms found!"));
     }
 
     public void delete(String name) {
@@ -44,6 +45,6 @@ public class BoardroomService {
     }
 
     public boolean exists(Boardroom boardroom) {
-        return read(boardroom.getName()) != null;
+        return boardroomRepository.existsById(boardroom.getId());
     }
 }
