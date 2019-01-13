@@ -26,7 +26,7 @@ public class Phone {
     private UUID id;
     @JsonInclude(NON_DEFAULT)
     @Positive
-    @Max(value = PHONE_MAX_INTERNAL_NUMBER, message = "The max internal number must be less then " + PHONE_MAX_INTERNAL_NUMBER + ".")
+    @Max(value = PHONE_MAX_INTERNAL_NUMBER, message = "Incorrect. Maximum internal number must be less then " + PHONE_MAX_INTERNAL_NUMBER + ".")
     private Integer internalNumber;
     @JsonInclude(NON_DEFAULT)
     @Pattern(regexp = ACCEPTABLE_EXTERNAL_NUMBER_FORMAT, message = "Incorrect external number format.")
