@@ -37,7 +37,7 @@ public class BoardroomService {
     }
 
     public void delete(String name) {
-        boardroomRepository.deleteById(name);
+        if (boardroomRepository.existsById(name)) boardroomRepository.deleteById(name);
     }
 
     public void update(String name, Boardroom boardroomUpdated) {
