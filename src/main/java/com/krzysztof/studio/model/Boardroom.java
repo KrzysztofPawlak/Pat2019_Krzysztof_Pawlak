@@ -20,9 +20,9 @@ import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MIN_LEVEL;
 import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MAX_LENGTH;
 import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MIN_LENGTH;
 
+@Data
 @Entity
 @Table
-@Data
 public class Boardroom {
 
     @Id
@@ -60,4 +60,5 @@ public class Boardroom {
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     private Equipment equipment;
+
 }

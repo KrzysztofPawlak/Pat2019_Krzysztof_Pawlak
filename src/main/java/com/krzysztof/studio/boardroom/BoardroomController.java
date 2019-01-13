@@ -2,6 +2,7 @@ package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.model.Boardroom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class BoardroomController {
 
     @PostMapping(value = "/boardrooms")
     public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
-       return boardroomService.create(boardroom);
+        return new ResponseEntity<>(boardroomService.create(boardroom), HttpStatus.CREATED);
     }
 
     @GetMapping(value="/boardrooms")

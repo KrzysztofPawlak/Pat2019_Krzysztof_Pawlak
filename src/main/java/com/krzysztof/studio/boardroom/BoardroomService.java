@@ -1,10 +1,9 @@
 package com.krzysztof.studio.boardroom;
 
+import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.Boardroom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,14 +15,9 @@ public class BoardroomService {
     @Autowired
     BoardroomRepository boardroomRepository;
 
-    public ResponseEntity<?> create(Boardroom boardroom) {
-
-        if (!exists(boardroom)) {
-            boardroomRepository.save(boardroom);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity<>("Boardroom already exists.", HttpStatus.BAD_REQUEST);
+    public Boardroom create(Boardroom boardroom) {
+        if(exists(boardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        return boardroomRepository.save(boardroom);
     }
 
     public List<Boardroom> read() {
@@ -45,6 +39,6 @@ public class BoardroomService {
     }
 
     public boolean exists(Boardroom boardroom) {
-        return boardroomRepository.existsById(boardroom.getId());
+        return boardroomRepository.existsById(boardroom.getName());
     }
 }
