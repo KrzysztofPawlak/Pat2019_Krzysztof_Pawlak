@@ -12,6 +12,7 @@ public class PhoneInterfaceValidator implements ConstraintValidator<PhoneInterfa
         this.annotation = annotation;
     }
 
+    // TODO: replace with stream
     @Override
     public boolean isValid(String valueToValid, ConstraintValidatorContext constraintValidatorContext) {
 

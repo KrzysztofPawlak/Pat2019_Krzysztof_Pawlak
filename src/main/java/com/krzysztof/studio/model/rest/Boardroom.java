@@ -1,28 +1,21 @@
-package com.krzysztof.studio.model;
+package com.krzysztof.studio.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.krzysztof.studio.model.Equipment;
 import com.krzysztof.studio.validation.WhiteSpaceCheck;
 import lombok.Data;
 
-import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_ID_MAX_LENGTH;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_ID_MIN_LENGTH;
+import static com.krzysztof.studio.config.ApiConfig.*;
 import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MAX_LEVEL;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MIN_LEVEL;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MAX_LENGTH;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_NAME_MIN_LENGTH;
 
 @Data
-@Entity
-@Table
 public class Boardroom {
 
-    @Id
     @NotNull
     @WhiteSpaceCheck
     @Size(min = BOARDROOM_NAME_MIN_LENGTH, message = "Not enough characters. Minimum is " + BOARDROOM_NAME_MIN_LENGTH + ".")
@@ -52,7 +45,5 @@ public class Boardroom {
     private Integer hammocks;
     @JsonInclude(NON_DEFAULT)
     @Valid
-    @OneToOne(cascade = CascadeType.ALL)
     private Equipment equipment;
-
 }

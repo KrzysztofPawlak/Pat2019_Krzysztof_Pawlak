@@ -1,7 +1,7 @@
 package com.krzysztof.studio;
 
 import com.krzysztof.studio.boardroom.BoardroomService;
-import com.krzysztof.studio.model.Boardroom;
+import com.krzysztof.studio.model.db.DbBoardroom;
 import com.krzysztof.studio.model.Equipment;
 import com.krzysztof.studio.model.Organization;
 import com.krzysztof.studio.model.Phone;
@@ -41,8 +41,8 @@ public class MainApplication {
 		return organization;
 	}
 
-	private Boardroom createSampleBoardroom() {
-		var boardroom = new Boardroom();
+	private DbBoardroom createSampleBoardroom() {
+		var boardroom = new DbBoardroom();
 		boardroom.setName("salka blue");
 		boardroom.setId("1.33");
 		boardroom.setOrganizationName("foo");

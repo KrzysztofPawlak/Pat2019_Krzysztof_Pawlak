@@ -2,7 +2,7 @@ package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
-import com.krzysztof.studio.model.Boardroom;
+import com.krzysztof.studio.model.db.DbBoardroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +15,18 @@ public class BoardroomService {
     @Autowired
     BoardroomRepository boardroomRepository;
 
-    public Boardroom create(Boardroom boardroom) {
-        if(exists(boardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
-        return boardroomRepository.save(boardroom);
+    public DbBoardroom create(DbBoardroom dbBoardroom) {
+        if(exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        return boardroomRepository.save(dbBoardroom);
     }
 
-    public List<Boardroom> read() {
-        var boardrooms = new ArrayList<Boardroom>();
+    public List<DbBoardroom> read() {
+        var boardrooms = new ArrayList<DbBoardroom>();
         boardroomRepository.findAll().forEach(boardrooms::add);
         return boardrooms;
     }
 
-    public Boardroom read(String name) {
+    public DbBoardroom read(String name) {
         return boardroomRepository.findById(name).orElseThrow(() -> new ResourceNotFoundException("No Boardrooms found!"));
     }
 
@@ -34,11 +34,11 @@ public class BoardroomService {
         if (boardroomRepository.existsById(name)) boardroomRepository.deleteById(name);
     }
 
-    public void update(String name, Boardroom boardroomUpdated) {
-        if (boardroomRepository.existsById(name)) boardroomRepository.save(boardroomUpdated);
+    public void update(String name, DbBoardroom dbBoardroomUpdated) {
+        if (boardroomRepository.existsById(name)) boardroomRepository.save(dbBoardroomUpdated);
     }
 
-    public boolean exists(Boardroom boardroom) {
-        return boardroomRepository.existsById(boardroom.getName());
+    public boolean exists(DbBoardroom dbBoardroom) {
+        return boardroomRepository.existsById(dbBoardroom.getName());
     }
 }
