@@ -1,7 +1,6 @@
 package com.krzysztof.studio.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.krzysztof.studio.model.Equipment;
 import com.krzysztof.studio.validation.WhiteSpaceCheck;
 import lombok.Data;
 

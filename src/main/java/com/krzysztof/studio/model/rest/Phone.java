@@ -1,15 +1,14 @@
-package com.krzysztof.studio.model;
+package com.krzysztof.studio.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.krzysztof.studio.model.PhoneInterface;
 import com.krzysztof.studio.validation.PhoneInterfaceEnum;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
-
 import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;

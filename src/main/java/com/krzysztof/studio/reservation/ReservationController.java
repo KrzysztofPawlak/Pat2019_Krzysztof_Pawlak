@@ -1,6 +1,6 @@
 package com.krzysztof.studio.reservation;
 
-import com.krzysztof.studio.model.Reservation;
+import com.krzysztof.studio.model.rest.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

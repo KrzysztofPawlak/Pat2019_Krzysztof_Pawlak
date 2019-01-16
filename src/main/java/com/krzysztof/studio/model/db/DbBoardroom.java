@@ -1,6 +1,5 @@
 package com.krzysztof.studio.model.db;
 
-import com.krzysztof.studio.model.Equipment;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,6 +20,6 @@ public class DbBoardroom {
     private Integer sunbeds;
     private Integer hammocks;
     @OneToOne(cascade = CascadeType.ALL)
-    private Equipment equipment;
+    private DbEquipment equipment;
 
 }

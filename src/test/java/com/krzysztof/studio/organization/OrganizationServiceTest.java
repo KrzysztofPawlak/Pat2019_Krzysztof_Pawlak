@@ -1,6 +1,6 @@
 package com.krzysztof.studio.organization;
 
-import com.krzysztof.studio.model.Organization;
+import com.krzysztof.studio.model.rest.Organization;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

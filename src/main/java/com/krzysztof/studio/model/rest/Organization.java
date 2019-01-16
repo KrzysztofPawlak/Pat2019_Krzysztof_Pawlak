@@ -1,4 +1,4 @@
-package com.krzysztof.studio.model;
+package com.krzysztof.studio.model.rest;
 
 import com.krzysztof.studio.validation.WhiteSpaceCheck;
 import lombok.Data;

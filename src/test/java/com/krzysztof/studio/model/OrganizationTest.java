@@ -1,5 +1,6 @@
 package com.krzysztof.studio.model;
 
+import com.krzysztof.studio.model.rest.Organization;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

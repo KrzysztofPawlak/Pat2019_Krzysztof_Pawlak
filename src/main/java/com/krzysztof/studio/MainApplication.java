@@ -1,12 +1,12 @@
 package com.krzysztof.studio;
 
 import com.krzysztof.studio.boardroom.BoardroomService;
-import com.krzysztof.studio.model.db.DbBoardroom;
-import com.krzysztof.studio.model.Equipment;
-import com.krzysztof.studio.model.Organization;
-import com.krzysztof.studio.model.Phone;
+import com.krzysztof.studio.model.db.*;
+import com.krzysztof.studio.model.rest.Equipment;
+import com.krzysztof.studio.model.rest.Organization;
+import com.krzysztof.studio.model.rest.Phone;
 import com.krzysztof.studio.model.PhoneInterface;
-import com.krzysztof.studio.model.Reservation;
+import com.krzysztof.studio.model.rest.Reservation;
 import com.krzysztof.studio.organization.OrganizationService;
 import com.krzysztof.studio.reservation.ReservationService;
 import org.springframework.boot.CommandLineRunner;
@@ -31,12 +31,12 @@ public class MainApplication {
 		return args -> {
 			organizationService.create(createSampleOrganization());
 			boardroomService.create(createSampleBoardroom());
-			reservationService.create(createSampleReservation());
+			//reservationService.create(createSampleReservation());
 		};
 	}
 
-	private Organization createSampleOrganization() {
-		var organization = new Organization();
+	private DbOrganization createSampleOrganization() {
+		var organization = new DbOrganization();
 		organization.setName("foo");
 		return organization;
 	}
@@ -56,8 +56,8 @@ public class MainApplication {
 		return boardroom;
 	}
 
-	private Equipment createSampleEquipment() {
-		var equipment = new Equipment();
+	private DbEquipment createSampleEquipment() {
+		var equipment = new DbEquipment();
 		equipment.setProjectorName("foo");
 		equipment.setId(UUID.randomUUID());
 		equipment.setPhoneAvailable(true);
@@ -65,8 +65,8 @@ public class MainApplication {
 		return equipment;
 	}
 
-	private Phone createSamplePhone() {
-		var phone = new Phone();
+	private DbPhone createSamplePhone() {
+		var phone = new DbPhone();
 		phone.setId(UUID.randomUUID());
 		phone.setExternalNumber("+12 123456789");
 		phone.setInternalNumber(99);
@@ -74,8 +74,8 @@ public class MainApplication {
 		return phone;
 	}
 
-	private Reservation createSampleReservation() {
-		var reservation = new Reservation();
+	private DbReservation createSampleReservation() {
+		var reservation = new DbReservation();
 		reservation.setId("foo");
 		reservation.setBoardroomName("salka blue");
 		reservation.setReservationFrom(LocalDateTime.now());

@@ -1,7 +1,11 @@
 package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.model.db.DbBoardroom;
+import com.krzysztof.studio.model.db.DbEquipment;
+import com.krzysztof.studio.model.db.DbPhone;
 import com.krzysztof.studio.model.rest.Boardroom;
+import com.krzysztof.studio.model.rest.Equipment;
+import com.krzysztof.studio.model.rest.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +24,8 @@ public class BoardroomController {
     private BoardroomService boardroomService;
 
     @PostMapping(value = "/boardrooms")
-    public ResponseEntity<?> create(@RequestBody @Valid DbBoardroom boardroom) {
-        return new ResponseEntity<>(boardroomService.create(boardroom), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
+        return new ResponseEntity<>(boardroomService.create(convertToDb(boardroom)), HttpStatus.CREATED);
     }
 
     // TODO: replace with stream
@@ -61,8 +65,26 @@ public class BoardroomController {
         boardroom.setStandingPlaces(dbBoardroom.getStandingPlaces());
         boardroom.setSunbeds(dbBoardroom.getSunbeds());
         boardroom.setHammocks(dbBoardroom.getHammocks());
-        boardroom.setEquipment(dbBoardroom.getEquipment());
+        boardroom.setEquipment(convertToView(dbBoardroom.getEquipment()));
         return boardroom;
+    }
+
+    private Equipment convertToView(DbEquipment dbEquipment) {
+        var equipment = new Equipment();
+        equipment.setId(dbEquipment.getId());
+        equipment.setProjectorName(dbEquipment.getProjectorName());
+        equipment.setPhoneAvailable(dbEquipment.isPhoneAvailable());
+        equipment.setPhone(convertToView(dbEquipment.getPhone()));
+        return equipment;
+    }
+
+    private Phone convertToView(DbPhone dbPhone) {
+        var phone = new Phone();
+        phone.setId(dbPhone.getId());
+        phone.setInternalNumber(dbPhone.getInternalNumber());
+        phone.setExternalNumber(dbPhone.getExternalNumber());
+        phone.setPhoneInterface(dbPhone.getPhoneInterface());
+        return phone;
     }
 
     private DbBoardroom convertToDb(Boardroom boardroom) {
@@ -76,7 +98,25 @@ public class BoardroomController {
         dbBoardroom.setStandingPlaces(boardroom.getStandingPlaces());
         dbBoardroom.setSunbeds(boardroom.getSunbeds());
         dbBoardroom.setHammocks(boardroom.getHammocks());
-        dbBoardroom.setEquipment(boardroom.getEquipment());
+        dbBoardroom.setEquipment(convertToDb(boardroom.getEquipment()));
         return dbBoardroom;
+    }
+
+    private DbEquipment convertToDb(Equipment equipment) {
+        var dbEquipment = new DbEquipment();
+        dbEquipment.setId(equipment.getId());
+        dbEquipment.setProjectorName(equipment.getProjectorName());
+        dbEquipment.setPhoneAvailable(equipment.isPhoneAvailable());
+        dbEquipment.setPhone(convertToDb(equipment.getPhone()));
+        return dbEquipment;
+    }
+
+    private DbPhone convertToDb(Phone phone) {
+        var dbPhone = new DbPhone();
+        dbPhone.setId(phone.getId());
+        dbPhone.setInternalNumber(phone.getInternalNumber());
+        dbPhone.setExternalNumber(phone.getExternalNumber());
+        dbPhone.setPhoneInterface(phone.getPhoneInterface());
+        return dbPhone;
     }
 }
