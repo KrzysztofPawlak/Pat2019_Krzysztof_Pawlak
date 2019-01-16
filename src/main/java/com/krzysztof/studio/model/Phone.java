@@ -3,10 +3,9 @@ package com.krzysztof.studio.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.krzysztof.studio.validation.PhoneInterfaceEnum;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
@@ -23,6 +22,7 @@ import static com.krzysztof.studio.config.ApiConfig.PHONE_MAX_INTERNAL_NUMBER;
 public class Phone {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @JsonInclude(NON_DEFAULT)
     @Positive
