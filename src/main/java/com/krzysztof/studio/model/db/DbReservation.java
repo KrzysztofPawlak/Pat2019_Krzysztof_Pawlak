@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class DbReservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String boardroomName;
     private LocalDateTime reservationFrom;

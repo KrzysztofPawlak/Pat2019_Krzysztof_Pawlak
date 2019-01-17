@@ -31,7 +31,7 @@ public class MainApplication {
 		return args -> {
 			organizationService.create(createSampleOrganization());
 			boardroomService.create(createSampleBoardroom());
-			//reservationService.create(createSampleReservation());
+			reservationService.create(createSampleReservation());
 		};
 	}
 
