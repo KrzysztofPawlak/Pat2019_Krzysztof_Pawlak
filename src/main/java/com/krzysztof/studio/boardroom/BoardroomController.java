@@ -29,7 +29,7 @@ public class BoardroomController {
     }
 
     // TODO: replace with stream
-    @GetMapping(value="/boardrooms")
+    @GetMapping(value = "/boardrooms")
     public List<Boardroom> read() {
         var dbBoardrooms = boardroomService.read();
         var boardrooms = new ArrayList<Boardroom>();
@@ -39,7 +39,7 @@ public class BoardroomController {
         return boardrooms;
     }
 
-    @GetMapping(value="/boardrooms/{name}")
+    @GetMapping(value = "/boardrooms/{name}")
     public Boardroom read(@PathVariable String name) {
         return convertToView(boardroomService.read(name));
     }
@@ -74,7 +74,7 @@ public class BoardroomController {
         equipment.setId(dbEquipment.getId());
         equipment.setProjectorName(dbEquipment.getProjectorName());
         equipment.setPhoneAvailable(dbEquipment.isPhoneAvailable());
-        equipment.setPhone(convertToView(dbEquipment.getPhone()));
+        if (dbEquipment.isPhoneAvailable()) equipment.setPhone(convertToView(dbEquipment.getPhone()));
         return equipment;
     }
 
@@ -107,7 +107,7 @@ public class BoardroomController {
         dbEquipment.setId(equipment.getId());
         dbEquipment.setProjectorName(equipment.getProjectorName());
         dbEquipment.setPhoneAvailable(equipment.isPhoneAvailable());
-        dbEquipment.setPhone(convertToDb(equipment.getPhone()));
+        if (equipment.isPhoneAvailable()) dbEquipment.setPhone(convertToDb(equipment.getPhone()));
         return dbEquipment;
     }
 

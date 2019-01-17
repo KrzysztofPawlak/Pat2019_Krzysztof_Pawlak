@@ -15,13 +15,9 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.krzysztof.studio.config.ApiConfig.ACCEPTABLE_EXTERNAL_NUMBER_FORMAT;
 import static com.krzysztof.studio.config.ApiConfig.PHONE_MAX_INTERNAL_NUMBER;
 
-@Entity
-@Table
 @Data
 public class Phone {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @JsonInclude(NON_DEFAULT)
     @Positive
