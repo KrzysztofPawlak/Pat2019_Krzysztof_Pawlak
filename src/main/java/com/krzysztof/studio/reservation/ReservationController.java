@@ -24,11 +24,8 @@ public class ReservationController {
 
     @GetMapping(value="/reservations")
     public List<Reservation> read() {
-        var dbReservations = reservationService.read();
         var reservations = new ArrayList<Reservation>();
-        for (DbReservation dbReservation : dbReservations) {
-            reservations.add(convertToView(dbReservation));
-        }
+        reservationService.read().stream().forEach((dbReservation) -> reservations.add(convertToView(dbReservation)));
         return reservations;
     }
 

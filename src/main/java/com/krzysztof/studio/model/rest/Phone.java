@@ -5,7 +5,6 @@ import com.krzysztof.studio.model.PhoneInterface;
 import com.krzysztof.studio.validation.PhoneInterfaceEnum;
 import lombok.Data;
 
-import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;

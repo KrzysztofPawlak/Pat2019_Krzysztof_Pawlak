@@ -24,11 +24,8 @@ public class OrganizationController {
 
     @GetMapping(value="/organizations")
     public List<Organization> read() {
-        var dbOrganizations = organizationService.read();
         var organizations = new ArrayList<Organization>();
-        for (DbOrganization dbOrganization : dbOrganizations) {
-            organizations.add(convertToView(dbOrganization));
-        }
+        organizationService.read().stream().forEach((dbOrganization) -> organizations.add(convertToView(dbOrganization)));
         return organizations;
     }
 

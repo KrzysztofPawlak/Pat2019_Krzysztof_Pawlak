@@ -28,14 +28,10 @@ public class BoardroomController {
         return new ResponseEntity<>(boardroomService.create(convertToDb(boardroom)), HttpStatus.CREATED);
     }
 
-    // TODO: replace with stream
     @GetMapping(value = "/boardrooms")
     public List<Boardroom> read() {
-        var dbBoardrooms = boardroomService.read();
         var boardrooms = new ArrayList<Boardroom>();
-        for (DbBoardroom dbBoardroom : dbBoardrooms) {
-            boardrooms.add(convertToView(dbBoardroom));
-        }
+        boardroomService.read().stream().forEach((dbBoardroom) -> boardrooms.add(convertToView(dbBoardroom)));
         return boardrooms;
     }
 
