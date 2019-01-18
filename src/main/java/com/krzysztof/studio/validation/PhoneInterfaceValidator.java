@@ -2,6 +2,7 @@ package com.krzysztof.studio.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Arrays;
 
 public class PhoneInterfaceValidator implements ConstraintValidator<PhoneInterfaceEnum, String> {
 
@@ -12,23 +13,10 @@ public class PhoneInterfaceValidator implements ConstraintValidator<PhoneInterfa
         this.annotation = annotation;
     }
 
-    // TODO: replace with stream
     @Override
     public boolean isValid(String valueToValid, ConstraintValidatorContext constraintValidatorContext) {
-
-        boolean result = false;
-
-        Object[] enumValues = this.annotation.enumClass().getEnumConstants();
-
-        if(enumValues != null) {
-            for(Object en : enumValues) {
-                if(valueToValid.equals(en.toString()) || (this.annotation.ignoreCase() && valueToValid.equalsIgnoreCase(en.toString()))) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-
-        return result;
+        if (valueToValid == null) return true;
+        var enumValues = this.annotation.enumClass().getEnumConstants();
+        return Arrays.stream(enumValues).anyMatch(enumValue -> valueToValid.equalsIgnoreCase(enumValue.toString()));
     }
 }
