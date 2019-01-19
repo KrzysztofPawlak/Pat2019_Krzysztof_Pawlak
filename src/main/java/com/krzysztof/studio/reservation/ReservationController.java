@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class ReservationController {
         var dbReservation = new DbReservation();
         dbReservation.setId(reservation.getId());
         dbReservation.setBoardroom(new DbBoardroom(reservation.getBoardroomName()));
-        dbReservation.setReservationFrom(reservation.getReservationFrom());
-        dbReservation.setReservationTo(reservation.getReservationTo());
+        dbReservation.setReservationFrom(reservation.getReservationFrom().truncatedTo(ChronoUnit.SECONDS));
+        dbReservation.setReservationTo(reservation.getReservationTo().truncatedTo(ChronoUnit.SECONDS));
         return dbReservation;
     }
 

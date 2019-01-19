@@ -1,5 +1,8 @@
 package com.krzysztof.studio.reservation;
 
+import com.krzysztof.studio.boardroom.BoardroomRepository;
+import com.krzysztof.studio.config.error.model.AlreadyReservedException;
+import com.krzysztof.studio.config.error.model.ReservationConditionException;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.db.DbReservation;
@@ -20,8 +23,12 @@ public class ReservationService {
     @Autowired
     ReservationRepository reservationRepository;
 
+    @Autowired
+    BoardroomRepository boardroomRepository;
+
     public DbReservation create(DbReservation dbReservation) {
         if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation id already exists!");
+        if (!boardroomRepository.existsById(dbReservation.getBoardroom().getName())) throw new ResourceNotFoundException("Specified boardroom is not exists!");
         checkReservationPreConditions(dbReservation);
         checkReservationIsAvailable(dbReservation);
         return reservationRepository.save(dbReservation);
@@ -43,6 +50,7 @@ public class ReservationService {
 
     public void update(String id, DbReservation dbReservationUpdated) {
         if (!reservationRepository.existsById(id)) return;
+        if (!boardroomRepository.existsById(dbReservationUpdated.getBoardroom().getName())) throw new ResourceNotFoundException("Specified boardroom is not exists!");
         checkReservationPreConditions(dbReservationUpdated);
         checkReservationIsAvailable(dbReservationUpdated);
         reservationRepository.save(dbReservationUpdated);
@@ -63,15 +71,20 @@ public class ReservationService {
         var maxReservationTime = Duration.ofMinutes(Duration.ofHours(RESERVATION_MAX_TIME_IN_HOUR).toMinutes());
         var minReservationTime = Duration.ofMinutes(RESERVATION_MIN_TIME_IN_MINUTES);
 
-        if (begin.isAfter(end) && end.isBefore(begin)) throw new ResourceAlreadyExistsException("Reservation end time cannot be before start time.");
-        if (reservationTime.compareTo(maxReservationTime) >= 0) throw new ResourceAlreadyExistsException("Exceeded reservation max time: " + RESERVATION_MAX_TIME_IN_HOUR + " hours.");
-        if (reservationTime.compareTo(minReservationTime) < 0) throw new ResourceAlreadyExistsException("Reservation min time cannot be less than: " + RESERVATION_MIN_TIME_IN_MINUTES + " minutes.");
+        if (begin.isAfter(end) && end.isBefore(begin))
+            throw new ReservationConditionException("Reservation end time cannot be before start time.");
+        if (reservationTime.compareTo(maxReservationTime) >= 0)
+            throw new ReservationConditionException("Exceeded reservation max time: " + RESERVATION_MAX_TIME_IN_HOUR + " hours.");
+        if (reservationTime.compareTo(minReservationTime) < 0)
+            throw new ReservationConditionException("Reservation min time cannot be less than: " + RESERVATION_MIN_TIME_IN_MINUTES + " minutes.");
     }
 
     private void checkReservationIsAvailable(DbReservation dbReservation) {
         var reservationList = getReservations(dbReservation.getBoardroom().getName());
         reservationList.stream().filter(reservationEntry ->
                 reservationEntry.isAvailable(dbReservation.getReservationFrom(), dbReservation.getReservationTo()) == false)
-                .findAny().ifPresent(reservationEntry -> { throw new ResourceAlreadyExistsException("Boardroom is already reserved!"); });
+                .findAny().ifPresent(reservationEntry -> {
+            throw new AlreadyReservedException("Boardroom is already reserved!");
+        });
     }
 }
