@@ -6,8 +6,14 @@ import com.krzysztof.studio.model.db.DbReservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MAX_TIME_IN_HOUR;
+import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MIN_TIME_IN_MINUTES;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 
 @Service
 public class ReservationService {
@@ -17,6 +23,7 @@ public class ReservationService {
 
     public DbReservation create(DbReservation dbReservation) {
         if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation already exists!");
+        checkReservationConditions(dbReservation);
         return reservationRepository.save(dbReservation);
     }
 
@@ -35,10 +42,24 @@ public class ReservationService {
     }
 
     public void update(String id, DbReservation dbReservationUpdated) {
-        if (reservationRepository.existsById(id)) reservationRepository.save(dbReservationUpdated);
+        if (!reservationRepository.existsById(id)) return;
+        checkReservationConditions(dbReservationUpdated);
+        reservationRepository.save(dbReservationUpdated);
     }
 
     public boolean exists(DbReservation dbReservation) {
         return reservationRepository.existsById(dbReservation.getId());
+    }
+
+    private void checkReservationConditions(DbReservation dbReservation) {
+        var begin = dbReservation.getReservationFrom();
+        var end = dbReservation.getReservationTo();
+        var reservationTime = Duration.ofMinutes(MINUTES.between(begin, end));
+        var maxReservationTime = Duration.ofMinutes(Duration.ofHours(RESERVATION_MAX_TIME_IN_HOUR).toMinutes());
+        var minReservationTime = Duration.ofMinutes(RESERVATION_MIN_TIME_IN_MINUTES);
+
+        if (begin.isAfter(end) && end.isBefore(begin)) throw new ResourceAlreadyExistsException("Reservation end time cannot be before start time.");
+        if (reservationTime.compareTo(maxReservationTime) >= 0) throw new ResourceAlreadyExistsException("Exceeded reservation max time: " + RESERVATION_MAX_TIME_IN_HOUR + " hours.");
+        if (reservationTime.compareTo(minReservationTime) < 0) throw new ResourceAlreadyExistsException("Reservation min time cannot be less than: " + RESERVATION_MIN_TIME_IN_MINUTES + " minutes.");
     }
 }

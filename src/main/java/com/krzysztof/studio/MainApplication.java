@@ -75,7 +75,7 @@ public class MainApplication {
 		reservation.setId("foo");
 		reservation.setBoardroom(createSampleBoardroom());
 		reservation.setReservationFrom(LocalDateTime.now());
-		reservation.setReservationTo(LocalDateTime.now());
+		reservation.setReservationTo(LocalDateTime.now().plusHours(1));
 		return reservation;
 	}
 }

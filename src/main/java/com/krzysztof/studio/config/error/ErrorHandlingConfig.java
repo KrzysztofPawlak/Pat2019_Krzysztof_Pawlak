@@ -1,5 +1,6 @@
 package com.krzysztof.studio.config.error;
 
+import com.krzysztof.studio.config.error.model.ReservationConditionException;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,11 @@ public class ErrorHandlingConfig {
 
     @ExceptionHandler(value = ResourceAlreadyExistsException.class)
     public ResponseEntity handleResourceAlreadyExistsException(ResourceAlreadyExistsException exception) {
-        return new ResponseEntity (exception.getDescription(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity (exception.getDescription(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = ReservationConditionException.class)
+    public ResponseEntity handleReservationConditionException(ReservationConditionException exception) {
+        return new ResponseEntity (exception.getDescription(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

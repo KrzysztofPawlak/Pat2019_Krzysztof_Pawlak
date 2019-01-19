@@ -20,4 +20,7 @@ public final class ApiConfig {
     public static final int RESERVATION_MAX_LENGTH = 20;
 
     public static final String ACCEPTABLE_EXTERNAL_NUMBER_FORMAT = "^\\+[0-9]{2}\\s[0-9]{9}$";
+
+    public static final long RESERVATION_MAX_TIME_IN_HOUR = 2;
+    public static final long RESERVATION_MIN_TIME_IN_MINUTES = 5;
 }
