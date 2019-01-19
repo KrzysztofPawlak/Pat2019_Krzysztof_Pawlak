@@ -1,6 +1,6 @@
 # Pat2019_Krzysztof_Pawlak
 
-requirements: Java 10
+requirements: Java 11
 
 checked on: IntelliJ 2018.3.2, gradle 5.1
 
@@ -22,7 +22,23 @@ gradle run -Dorg.gradle.java.home={$your_java_path}
 example: gradle run -Dorg.gradle.java.home=/opt/jdk-10.0.1
 ```
 
-# Add new boardroom by using cURL
+## cURL
+
+### Important: You should make organization and boardroom before reservation!!! 
+- Boardroom require existing organization.
+- Reservation require existing boardroom.
+
+Add new organization
+```javascript
+curl -H "Content-Type: application/json" -X POST -d "{\"name\":\"foo\"}" http://localhost:8080/organizations	
+```
+
+Add new boardroom
 ```javascript
 curl -H "Content-Type: application/json" -X POST -d '{"name":"salka example","id":"1.33","organizationName":"foo","level":0,"available":true,"seats":10,"standingPlaces":10,"sunbeds":10,"hammocks":10,"equipment":{"projectorName":"foo","phoneAvailable":true,"phone":{"internalNumber":99,"externalNumber":"+12 123456789","phoneInterface":"USB"}}}' http://localhost:8080/boardrooms
+```
+
+Add new reservation
+```javascript
+curl -H "Content-Type: application/json" -X POST -d "{\"id\":\"foo\",\"boardroomName\":\"salka example\",\"reservationFrom\":\"2019-01-19T17:14:39\",\"reservationTo\":\"2019-01-19T18:14:39\"}" http://localhost:8080/reservations
 ```
