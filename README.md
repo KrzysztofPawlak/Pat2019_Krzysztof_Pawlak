@@ -35,7 +35,7 @@ curl -H "Content-Type: application/json" -X POST -d "{\"name\":\"foo\"}" http://
 
 Add new boardroom
 ```javascript
-curl -H "Content-Type: application/json" -X POST -d '{"name":"salka example","id":"1.33","organizationName":"foo","level":0,"available":true,"seats":10,"standingPlaces":10,"sunbeds":10,"hammocks":10,"equipment":{"projectorName":"foo","phoneAvailable":true,"phone":{"internalNumber":99,"externalNumber":"+12 123456789","phoneInterface":"USB"}}}' http://localhost:8080/boardrooms
+curl -H "Content-Type: application/json" -X POST -d "{\"name\":\"salka example\",\"id\":\"1.33\",\"organizationName\":\"foo\",\"level\":0,\"available\":true,\"seats\":10,\"standingPlaces\":10,\"sunbeds\":10,\"hammocks\":10,\"equipment\":{\"id\":\"88089ae1-7a58-4145-b072-742cdb56b20a\", \"projectorName\":\"foo\",\"phoneAvailable\":true,\"phone\":{\"id\":\"858a7536-3d00-4ff4-803f-7e1cc98b2ed7\", \"internalNumber\":99,\"externalNumber\":\"+12 123456789\",\"phoneInterface\":\"USB\"}}}" http://localhost:8080/boardrooms
 ```
 
 Add new reservation
