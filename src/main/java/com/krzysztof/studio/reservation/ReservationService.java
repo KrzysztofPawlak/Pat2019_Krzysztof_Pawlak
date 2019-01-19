@@ -28,7 +28,7 @@ public class ReservationService {
 
     public DbReservation create(DbReservation dbReservation) {
         if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation id already exists!");
-        if (!boardroomRepository.existsById(dbReservation.getBoardroom().getName())) throw new ResourceNotFoundException("Specified boardroom is not exists!");
+        checkBoardroomExists(dbReservation);
         checkReservationPreConditions(dbReservation);
         checkReservationIsAvailable(dbReservation);
         return reservationRepository.save(dbReservation);
@@ -50,10 +50,15 @@ public class ReservationService {
 
     public void update(String id, DbReservation dbReservationUpdated) {
         if (!reservationRepository.existsById(id)) return;
-        if (!boardroomRepository.existsById(dbReservationUpdated.getBoardroom().getName())) throw new ResourceNotFoundException("Specified boardroom is not exists!");
+        checkBoardroomExists(dbReservationUpdated);
         checkReservationPreConditions(dbReservationUpdated);
         checkReservationIsAvailable(dbReservationUpdated);
         reservationRepository.save(dbReservationUpdated);
+    }
+
+    private void checkBoardroomExists(DbReservation dbReservationUpdated) {
+        if (!boardroomRepository.existsById(dbReservationUpdated.getBoardroom().getName()))
+            throw new ResourceNotFoundException("Specified boardroom is not exists!");
     }
 
     public boolean exists(DbReservation dbReservation) {
