@@ -20,7 +20,7 @@ public class BoardroomService {
     OrganizationRepository organizationRepository;
 
     public DbBoardroom create(DbBoardroom dbBoardroom) {
-        if(exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        if (exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
         checkOrganizationExists(dbBoardroom);
         return boardroomRepository.save(dbBoardroom);
     }
@@ -40,7 +40,9 @@ public class BoardroomService {
     }
 
     public void update(String name, DbBoardroom dbBoardroomUpdated) {
-        if (boardroomRepository.existsById(name)) boardroomRepository.save(dbBoardroomUpdated);
+        if (!boardroomRepository.existsById(name)) return;
+        checkOrganizationExists(dbBoardroomUpdated);
+        boardroomRepository.save(dbBoardroomUpdated);
     }
 
     public boolean exists(DbBoardroom dbBoardroom) {
