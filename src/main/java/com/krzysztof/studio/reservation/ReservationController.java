@@ -1,5 +1,6 @@
 package com.krzysztof.studio.reservation;
 
+import com.krzysztof.studio.model.db.DbBoardroom;
 import com.krzysztof.studio.model.db.DbReservation;
 import com.krzysztof.studio.model.rest.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ReservationController {
 
     @PostMapping(value = "/reservations")
     public ResponseEntity<?> create(@RequestBody @Valid Reservation reservation) {
-        return new ResponseEntity<>(reservationService.create(convertToDb(reservation)), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToView(reservationService.create(convertToDb(reservation))), HttpStatus.CREATED);
     }
 
     @GetMapping(value="/reservations")
@@ -47,7 +48,7 @@ public class ReservationController {
     private DbReservation convertToDb(Reservation reservation) {
         var dbReservation = new DbReservation();
         dbReservation.setId(reservation.getId());
-        dbReservation.setBoardroomName(reservation.getBoardroomName());
+        dbReservation.setBoardroom(new DbBoardroom(reservation.getBoardroomName()));
         dbReservation.setReservationFrom(reservation.getReservationFrom());
         dbReservation.setReservationTo(reservation.getReservationTo());
         return dbReservation;
@@ -56,7 +57,7 @@ public class ReservationController {
     private Reservation convertToView(DbReservation dbReservation) {
         var reservation = new Reservation();
         reservation.setId(dbReservation.getId());
-        reservation.setBoardroomName(dbReservation.getBoardroomName());
+        reservation.setBoardroomName(dbReservation.getBoardroom().getName());
         reservation.setReservationFrom(dbReservation.getReservationFrom());
         reservation.setReservationTo(dbReservation.getReservationTo());
         return reservation;

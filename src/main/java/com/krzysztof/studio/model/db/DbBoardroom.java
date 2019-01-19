@@ -1,12 +1,14 @@
 package com.krzysztof.studio.model.db;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class DbBoardroom {
 
     @Id
@@ -22,4 +24,7 @@ public class DbBoardroom {
     @OneToOne(cascade = CascadeType.ALL)
     private DbEquipment equipment;
 
+    public DbBoardroom(String name) {
+        this.name = name;
+    }
 }

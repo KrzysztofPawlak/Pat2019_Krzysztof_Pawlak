@@ -12,7 +12,8 @@ public class DbReservation {
 
     @Id
     private String id;
-    private String boardroomName;
+    @ManyToOne
+    private DbBoardroom boardroom;
     private LocalDateTime reservationFrom;
     private LocalDateTime reservationTo;
 }

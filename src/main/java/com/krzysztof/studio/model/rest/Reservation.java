@@ -16,6 +16,7 @@ public class Reservation {
     @Size(min = RESERVATION_MIN_LENGTH, message = "Not enough characters. Minimum is " + RESERVATION_MIN_LENGTH + ".")
     @Size(max = RESERVATION_MAX_LENGTH, message = "Too many characters. Maximum is " + RESERVATION_MAX_LENGTH + ".")
     private String id;
+    @NotNull
     private String boardroomName;
     private LocalDateTime reservationFrom;
     private LocalDateTime reservationTo;
