@@ -41,7 +41,7 @@ public class MainApplication {
 		var boardroom = new DbBoardroom();
 		boardroom.setName("salka blue");
 		boardroom.setId("1.33");
-		boardroom.setOrganizationName("foo");
+		boardroom.setOrganization(createSampleOrganization());
 		boardroom.setLevel(0);
 		boardroom.setAvailable(true);
 		boardroom.setSeats(10);

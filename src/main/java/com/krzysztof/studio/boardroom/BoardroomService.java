@@ -3,6 +3,7 @@ package com.krzysztof.studio.boardroom;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.db.DbBoardroom;
+import com.krzysztof.studio.organization.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,12 @@ public class BoardroomService {
     @Autowired
     BoardroomRepository boardroomRepository;
 
+    @Autowired
+    OrganizationRepository organizationRepository;
+
     public DbBoardroom create(DbBoardroom dbBoardroom) {
         if(exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        checkOrganizationExists(dbBoardroom);
         return boardroomRepository.save(dbBoardroom);
     }
 
@@ -40,5 +45,10 @@ public class BoardroomService {
 
     public boolean exists(DbBoardroom dbBoardroom) {
         return boardroomRepository.existsById(dbBoardroom.getName());
+    }
+
+    private void checkOrganizationExists(DbBoardroom dbBoardroom) {
+        if (!organizationRepository.existsById(dbBoardroom.getOrganization().getName()))
+            throw new ResourceNotFoundException("Specified organization is not exists!");
     }
 }

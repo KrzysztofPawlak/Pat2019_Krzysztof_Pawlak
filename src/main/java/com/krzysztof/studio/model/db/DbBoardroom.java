@@ -14,7 +14,8 @@ public class DbBoardroom {
     @Id
     private String name;
     private String id;
-    private String organizationName;
+    @ManyToOne
+    private DbOrganization organization;
     private int level;
     private boolean available;
     private Integer seats;

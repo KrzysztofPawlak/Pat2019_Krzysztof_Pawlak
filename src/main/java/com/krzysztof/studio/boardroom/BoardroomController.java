@@ -2,6 +2,7 @@ package com.krzysztof.studio.boardroom;
 
 import com.krzysztof.studio.model.db.DbBoardroom;
 import com.krzysztof.studio.model.db.DbEquipment;
+import com.krzysztof.studio.model.db.DbOrganization;
 import com.krzysztof.studio.model.db.DbPhone;
 import com.krzysztof.studio.model.rest.Boardroom;
 import com.krzysztof.studio.model.rest.Equipment;
@@ -54,7 +55,7 @@ public class BoardroomController {
         var boardroom = new Boardroom();
         boardroom.setName(dbBoardroom.getName());
         boardroom.setId(dbBoardroom.getId());
-        boardroom.setOrganizationName(dbBoardroom.getOrganizationName());
+        boardroom.setOrganizationName(dbBoardroom.getOrganization().getName());
         boardroom.setLevel(dbBoardroom.getLevel());
         boardroom.setAvailable(dbBoardroom.isAvailable());
         boardroom.setSeats(dbBoardroom.getSeats());
@@ -87,7 +88,7 @@ public class BoardroomController {
         var dbBoardroom = new DbBoardroom();
         dbBoardroom.setName(boardroom.getName());
         dbBoardroom.setId(boardroom.getId());
-        dbBoardroom.setOrganizationName(boardroom.getOrganizationName());
+        dbBoardroom.setOrganization(new DbOrganization(boardroom.getOrganizationName()));
         dbBoardroom.setLevel(boardroom.getLevel());
         dbBoardroom.setAvailable(boardroom.isAvailable());
         dbBoardroom.setSeats(boardroom.getSeats());

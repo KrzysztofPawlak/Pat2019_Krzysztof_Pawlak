@@ -56,8 +56,8 @@ public class ReservationService {
         reservationRepository.save(dbReservationUpdated);
     }
 
-    private void checkBoardroomExists(DbReservation dbReservationUpdated) {
-        if (!boardroomRepository.existsById(dbReservationUpdated.getBoardroom().getName()))
+    private void checkBoardroomExists(DbReservation dbReservation) {
+        if (!boardroomRepository.existsById(dbReservation.getBoardroom().getName()))
             throw new ResourceNotFoundException("Specified boardroom is not exists!");
     }
 
