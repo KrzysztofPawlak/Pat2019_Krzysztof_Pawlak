@@ -5,10 +5,13 @@ import com.krzysztof.studio.config.error.model.AlreadyReservedException;
 import com.krzysztof.studio.config.error.model.ReservationConditionException;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
+import com.krzysztof.studio.model.db.DbBoardroom;
 import com.krzysztof.studio.model.db.DbReservation;
+import com.krzysztof.studio.model.rest.Reservation;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MAX_TIME_IN_HOUR;
@@ -26,22 +29,25 @@ class ReservationService {
         this.boardroomRepository = boardroomRepository;
     }
 
-    DbReservation create(DbReservation dbReservation) {
+    Reservation create(Reservation reservation) {
+        var dbReservation = convertToDb(reservation);
         if (exists(dbReservation)) {
             throw new ResourceAlreadyExistsException("Reservation id already exists!");
         }
         checkBoardroomExists(dbReservation);
         checkReservationPreConditions(dbReservation);
         checkReservationIsAvailable(dbReservation);
-        return reservationRepository.save(dbReservation);
+        return convertToView(reservationRepository.save(dbReservation));
     }
 
-    List<DbReservation> read() {
-        return reservationRepository.findAll();
+    List<Reservation> read() {
+        var reservations = new ArrayList<Reservation>();
+        reservationRepository.findAll().forEach(dbReservation -> reservations.add(convertToView(dbReservation)));
+        return reservations;
     }
 
-    DbReservation read(String id) {
-        return reservationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Reservations found!"));
+    Reservation read(String id) {
+        return convertToView(reservationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Reservations found!")));
     }
 
     void delete(String id) {
@@ -50,7 +56,8 @@ class ReservationService {
         }
     }
 
-    void update(String id, DbReservation dbReservationUpdated) {
+    void update(String id, Reservation reservationUpdated) {
+        var dbReservationUpdated = convertToDb(reservationUpdated);
         if (!reservationRepository.existsById(id)) {
             return;
         }
@@ -92,5 +99,23 @@ class ReservationService {
         reservationRepository.findOverlapReservations(dbReservation).stream().anyMatch(reservationEntry -> {
             throw new AlreadyReservedException("Boardroom is already reserved!");
         });
+    }
+
+    private DbReservation convertToDb(Reservation reservation) {
+        var dbReservation = new DbReservation();
+        dbReservation.setId(reservation.getId());
+        dbReservation.setBoardroom(new DbBoardroom(reservation.getBoardroomName()));
+        dbReservation.setReservationFrom(reservation.getReservationFrom().truncatedTo(MINUTES));
+        dbReservation.setReservationTo(reservation.getReservationTo().truncatedTo(MINUTES));
+        return dbReservation;
+    }
+
+    private Reservation convertToView(DbReservation dbReservation) {
+        var reservation = new Reservation();
+        reservation.setId(dbReservation.getId());
+        reservation.setBoardroomName(dbReservation.getBoardroom().getName());
+        reservation.setReservationFrom(dbReservation.getReservationFrom());
+        reservation.setReservationTo(dbReservation.getReservationTo());
+        return reservation;
     }
 }

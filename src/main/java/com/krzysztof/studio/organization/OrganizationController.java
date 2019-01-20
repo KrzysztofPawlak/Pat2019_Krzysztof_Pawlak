@@ -1,13 +1,11 @@
 package com.krzysztof.studio.organization;
 
-import com.krzysztof.studio.model.db.DbOrganization;
 import com.krzysztof.studio.model.rest.Organization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.krzysztof.studio.config.ApiConfig.ORGANIZATIONS;
@@ -24,24 +22,22 @@ class OrganizationController {
 
     @PostMapping
     ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
-        return new ResponseEntity<>(organizationService.create(convertToDb(organization)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(organizationService.create(organization), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
     List<Organization> read() {
-        var organizations = new ArrayList<Organization>();
-        organizationService.read().stream().forEach(dbOrganization -> organizations.add(convertToView(dbOrganization)));
-        return organizations;
+        return organizationService.read();
     }
 
     @GetMapping(value="{name}")
     Organization read(@PathVariable String name) {
-        return convertToView(organizationService.read(name));
+        return organizationService.read(name);
     }
 
     @PutMapping(value = "{name}")
     void update(@PathVariable String name, @RequestBody @Valid Organization organization) {
-        organizationService.update(name, convertToDb(organization));
+        organizationService.update(name, organization);
     }
 
     @DeleteMapping(value = "{name}")
@@ -49,15 +45,4 @@ class OrganizationController {
         organizationService.delete(name);
     }
 
-    private Organization convertToView(DbOrganization dbOrganization) {
-        var organization = new Organization();
-        organization.setName(dbOrganization.getName());
-        return organization;
-    }
-
-    private DbOrganization convertToDb(Organization organization) {
-        var dbOrganization = new DbOrganization();
-        dbOrganization.setName(organization.getName());
-        return dbOrganization;
-    }
 }
