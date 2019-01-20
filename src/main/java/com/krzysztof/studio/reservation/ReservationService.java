@@ -63,10 +63,6 @@ class ReservationService {
         return reservationRepository.existsById(dbReservation.getId());
     }
 
-    private List<DbReservation> getReservations(String boardroomName) {
-        return reservationRepository.findAllByBoardroomName(boardroomName);
-    }
-
     private void checkReservationPreConditions(DbReservation dbReservation) {
         var begin = dbReservation.getReservationFrom();
         var end = dbReservation.getReservationTo();
@@ -83,10 +79,7 @@ class ReservationService {
     }
 
     private void checkReservationIsAvailable(DbReservation dbReservation) {
-        var reservationList = getReservations(dbReservation.getBoardroom().getName());
-        reservationList.stream().filter(reservationEntry ->
-                reservationEntry.isAvailable(dbReservation.getReservationFrom(), dbReservation.getReservationTo()) == false)
-                .findAny().ifPresent(reservationEntry -> {
+        reservationRepository.findOverlapReservations(dbReservation).stream().anyMatch(reservationEntry -> {
             throw new AlreadyReservedException("Boardroom is already reserved!");
         });
     }

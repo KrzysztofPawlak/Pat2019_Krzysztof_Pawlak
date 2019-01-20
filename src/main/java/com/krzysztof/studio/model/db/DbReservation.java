@@ -17,10 +17,4 @@ public class DbReservation {
     private LocalDateTime reservationFrom;
     private LocalDateTime reservationTo;
 
-    public boolean isAvailable(LocalDateTime reservationFrom, LocalDateTime reservationTo) {
-        return (reservationFrom.isAfter(this.getReservationFrom()) && reservationFrom.isAfter(this.getReservationTo()) &&
-                        reservationTo.isAfter(this.getReservationFrom()) && reservationTo.isAfter(this.getReservationTo())) ||
-                        (reservationFrom.isBefore(this.getReservationFrom()) && reservationFrom.isBefore(this.getReservationTo()) &&
-                                reservationTo.isBefore(this.getReservationFrom()) && reservationTo.isBefore(this.getReservationTo()));
-    }
 }
