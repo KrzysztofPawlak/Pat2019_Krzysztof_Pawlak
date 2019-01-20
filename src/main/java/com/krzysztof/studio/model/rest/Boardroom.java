@@ -1,7 +1,6 @@
 package com.krzysztof.studio.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.krzysztof.studio.validation.WhiteSpaceCheck;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -16,12 +15,12 @@ import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MAX_LEVEL;
 public class Boardroom {
 
     @NotNull
-    @WhiteSpaceCheck
+    @NotBlank
     @Size(min = BOARDROOM_NAME_MIN_LENGTH, message = "Not enough characters. Minimum is " + BOARDROOM_NAME_MIN_LENGTH + ".")
     @Size(max = BOARDROOM_NAME_MAX_LENGTH, message = "Too many characters. Maximum is " + BOARDROOM_NAME_MAX_LENGTH + ".")
     private String name;
     @JsonInclude(NON_NULL)
-    @WhiteSpaceCheck
+    @NotBlank
     @Size(min = BOARDROOM_ID_MIN_LENGTH, message = "Not enough characters. Minimum is " + BOARDROOM_ID_MIN_LENGTH + ".")
     @Size(max = BOARDROOM_ID_MAX_LENGTH, message = "Too many characters. Maximum is " + BOARDROOM_ID_MAX_LENGTH + ".")
     private String id;
