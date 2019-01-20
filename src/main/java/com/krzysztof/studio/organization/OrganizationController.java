@@ -11,35 +11,38 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.krzysztof.studio.config.ApiConfig.ORGANIZATIONS;
+
 @RestController
+@RequestMapping(value = ORGANIZATIONS)
 public class OrganizationController {
 
     @Autowired
     private OrganizationService organizationService;
 
-    @PostMapping(value = "/organizations")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
         return new ResponseEntity<>(organizationService.create(convertToDb(organization)), HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(value="/organizations")
+    @GetMapping
     public List<Organization> read() {
         var organizations = new ArrayList<Organization>();
         organizationService.read().stream().forEach((dbOrganization) -> organizations.add(convertToView(dbOrganization)));
         return organizations;
     }
 
-    @GetMapping(value="/organizations/{name}")
+    @GetMapping(value="{name}")
     public Organization read(@PathVariable String name) {
         return convertToView(organizationService.read(name));
     }
 
-    @PutMapping(value = "/organizations/{name}")
+    @PutMapping(value = "{name}")
     public void update(@PathVariable String name, @RequestBody @Valid Organization organization) {
         organizationService.update(name, convertToDb(organization));
     }
 
-    @DeleteMapping(value = "/organizations/{name}")
+    @DeleteMapping(value = "{name}")
     public void delete(@PathVariable String name) {
         organizationService.delete(name);
     }

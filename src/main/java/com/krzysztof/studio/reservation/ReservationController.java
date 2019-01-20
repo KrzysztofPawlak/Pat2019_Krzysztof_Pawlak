@@ -13,35 +13,38 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.krzysztof.studio.config.ApiConfig.RESERVATIONS;
+
 @RestController
+@RequestMapping(value = RESERVATIONS)
 public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping(value = "/reservations")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid Reservation reservation) {
         return new ResponseEntity<>(convertToView(reservationService.create(convertToDb(reservation))), HttpStatus.CREATED);
     }
 
-    @GetMapping(value="/reservations")
+    @GetMapping
     public List<Reservation> read() {
         var reservations = new ArrayList<Reservation>();
         reservationService.read().stream().forEach((dbReservation) -> reservations.add(convertToView(dbReservation)));
         return reservations;
     }
 
-    @GetMapping(value="/reservations/{name}")
+    @GetMapping(value="{name}")
     public Reservation read(@PathVariable String name) {
         return convertToView(reservationService.read(name));
     }
 
-    @PutMapping(value = "/reservations/{name}")
+    @PutMapping(value = "{name}")
     public void update(@PathVariable String name, @RequestBody @Valid Reservation reservation) {
         reservationService.update(name, convertToDb(reservation));
     }
 
-    @DeleteMapping(value = "/reservations/{name}")
+    @DeleteMapping(value = "{name}")
     public void delete(@PathVariable String name) {
         reservationService.delete(name);
     }

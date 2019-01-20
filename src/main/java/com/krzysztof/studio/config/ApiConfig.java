@@ -23,4 +23,8 @@ public final class ApiConfig {
 
     public static final long RESERVATION_MAX_TIME_IN_HOUR = 2;
     public static final long RESERVATION_MIN_TIME_IN_MINUTES = 5;
+
+    public static final String BOARDROOMS = "/boardrooms";
+    public static final String RESERVATIONS = "/reservations";
+    public static final String ORGANIZATIONS = "/organizations";
 }

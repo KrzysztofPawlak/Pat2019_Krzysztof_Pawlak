@@ -17,8 +17,11 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.krzysztof.studio.config.ApiConfig.BOARDROOMS;
+
 @Validated
 @RestController
+@RequestMapping(value = BOARDROOMS)
 public class BoardroomController {
 
     @Autowired
@@ -29,24 +32,24 @@ public class BoardroomController {
         return new ResponseEntity<>(boardroomService.create(convertToDb(boardroom)), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/boardrooms")
+    @GetMapping
     public List<Boardroom> read() {
         var boardrooms = new ArrayList<Boardroom>();
         boardroomService.read().stream().forEach((dbBoardroom) -> boardrooms.add(convertToView(dbBoardroom)));
         return boardrooms;
     }
 
-    @GetMapping(value = "/boardrooms/{name}")
+    @GetMapping(value = "{name}")
     public Boardroom read(@PathVariable String name) {
         return convertToView(boardroomService.read(name));
     }
 
-    @PutMapping(value = "/boardrooms/{name}")
+    @PutMapping(value = "{name}")
     public void update(@PathVariable String name, @RequestBody @Valid Boardroom boardroom) {
         boardroomService.update(name, convertToDb(boardroom));
     }
 
-    @DeleteMapping(value = "/boardrooms/{name}")
+    @DeleteMapping(value = "{name}")
     public void delete(@PathVariable String name) {
         boardroomService.delete(name);
     }
