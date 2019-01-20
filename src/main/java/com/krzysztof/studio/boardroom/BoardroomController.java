@@ -21,38 +21,38 @@ import static com.krzysztof.studio.config.ApiConfig.BOARDROOMS;
 @Validated
 @RestController
 @RequestMapping(value = BOARDROOMS)
-public class BoardroomController {
+class BoardroomController {
 
     private final BoardroomService boardroomService;
 
-    public BoardroomController(BoardroomService boardroomService) {
+    BoardroomController(BoardroomService boardroomService) {
         this.boardroomService = boardroomService;
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
+    ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
         return new ResponseEntity<>(boardroomService.create(convertToDb(boardroom)), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Boardroom> read() {
+    List<Boardroom> read() {
         var boardrooms = new ArrayList<Boardroom>();
         boardroomService.read().stream().forEach(dbBoardroom -> boardrooms.add(convertToView(dbBoardroom)));
         return boardrooms;
     }
 
     @GetMapping(value = "{name}")
-    public Boardroom read(@PathVariable String name) {
+    Boardroom read(@PathVariable String name) {
         return convertToView(boardroomService.read(name));
     }
 
     @PutMapping(value = "{name}")
-    public void update(@PathVariable String name, @RequestBody @Valid Boardroom boardroom) {
+    void update(@PathVariable String name, @RequestBody @Valid Boardroom boardroom) {
         boardroomService.update(name, convertToDb(boardroom));
     }
 
     @DeleteMapping(value = "{name}")
-    public void delete(@PathVariable String name) {
+    void delete(@PathVariable String name) {
         boardroomService.delete(name);
     }
 

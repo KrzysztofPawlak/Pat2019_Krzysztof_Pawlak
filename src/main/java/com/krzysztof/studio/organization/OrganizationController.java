@@ -14,38 +14,38 @@ import static com.krzysztof.studio.config.ApiConfig.ORGANIZATIONS;
 
 @RestController
 @RequestMapping(value = ORGANIZATIONS)
-public class OrganizationController {
+class OrganizationController {
 
     private final OrganizationService organizationService;
 
-    public OrganizationController(OrganizationService organizationService) {
+    OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
+    ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
         return new ResponseEntity<>(organizationService.create(convertToDb(organization)), HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping
-    public List<Organization> read() {
+    List<Organization> read() {
         var organizations = new ArrayList<Organization>();
         organizationService.read().stream().forEach(dbOrganization -> organizations.add(convertToView(dbOrganization)));
         return organizations;
     }
 
     @GetMapping(value="{name}")
-    public Organization read(@PathVariable String name) {
+    Organization read(@PathVariable String name) {
         return convertToView(organizationService.read(name));
     }
 
     @PutMapping(value = "{name}")
-    public void update(@PathVariable String name, @RequestBody @Valid Organization organization) {
+    void update(@PathVariable String name, @RequestBody @Valid Organization organization) {
         organizationService.update(name, convertToDb(organization));
     }
 
     @DeleteMapping(value = "{name}")
-    public void delete(@PathVariable String name) {
+    void delete(@PathVariable String name) {
         organizationService.delete(name);
     }
 

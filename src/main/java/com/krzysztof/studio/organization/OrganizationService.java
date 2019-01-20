@@ -9,38 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrganizationService {
+class OrganizationService {
 
     private final OrganizationRepository organizationRepository;
 
-    public OrganizationService(OrganizationRepository organizationRepository) {
+    OrganizationService(OrganizationRepository organizationRepository) {
         this.organizationRepository = organizationRepository;
     }
 
-    public DbOrganization create(DbOrganization dbOrganization) {
+    DbOrganization create(DbOrganization dbOrganization) {
         if (exists(dbOrganization)) throw new ResourceAlreadyExistsException("Organizations already exists!");
         return organizationRepository.save(dbOrganization);
     }
 
-    public List<DbOrganization> read() {
+    List<DbOrganization> read() {
         var organizations = new ArrayList<DbOrganization>();
         organizationRepository.findAll().forEach(organizations::add);
         return organizations;
     }
 
-    public DbOrganization read(String name) {
+    DbOrganization read(String name) {
         return organizationRepository.findById(name).orElseThrow(() -> new ResourceNotFoundException("No Organizations found!"));
     }
 
-    public void delete(String name) {
+    void delete(String name) {
         if (organizationRepository.existsById(name)) organizationRepository.deleteById(name);
     }
 
-    public void update(String name, DbOrganization dbOrganizationUpdated) {
+    void update(String name, DbOrganization dbOrganizationUpdated) {
         if (organizationRepository.existsById(name)) organizationRepository.save(dbOrganizationUpdated);
     }
 
-    public boolean exists(DbOrganization dbOrganization) {
+    private boolean exists(DbOrganization dbOrganization) {
         return organizationRepository.existsById(dbOrganization.getName());
     }
 }

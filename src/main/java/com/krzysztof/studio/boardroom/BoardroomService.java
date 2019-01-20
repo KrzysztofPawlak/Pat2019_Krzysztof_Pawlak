@@ -10,43 +10,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BoardroomService {
+class BoardroomService {
 
     private final BoardroomRepository boardroomRepository;
     private final OrganizationRepository organizationRepository;
 
-    public BoardroomService(BoardroomRepository boardroomRepository, OrganizationRepository organizationRepository) {
+    BoardroomService(BoardroomRepository boardroomRepository, OrganizationRepository organizationRepository) {
         this.boardroomRepository = boardroomRepository;
         this.organizationRepository = organizationRepository;
     }
 
-    public DbBoardroom create(DbBoardroom dbBoardroom) {
+    DbBoardroom create(DbBoardroom dbBoardroom) {
         if (exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
         checkOrganizationExists(dbBoardroom);
         return boardroomRepository.save(dbBoardroom);
     }
 
-    public List<DbBoardroom> read() {
+    List<DbBoardroom> read() {
         var boardrooms = new ArrayList<DbBoardroom>();
         boardroomRepository.findAll().forEach(boardrooms::add);
         return boardrooms;
     }
 
-    public DbBoardroom read(String name) {
+    DbBoardroom read(String name) {
         return boardroomRepository.findById(name).orElseThrow(() -> new ResourceNotFoundException("No Boardrooms found!"));
     }
 
-    public void delete(String name) {
+    void delete(String name) {
         if (boardroomRepository.existsById(name)) boardroomRepository.deleteById(name);
     }
 
-    public void update(String name, DbBoardroom dbBoardroomUpdated) {
+    void update(String name, DbBoardroom dbBoardroomUpdated) {
         if (!boardroomRepository.existsById(name)) return;
         checkOrganizationExists(dbBoardroomUpdated);
         boardroomRepository.save(dbBoardroomUpdated);
     }
 
-    public boolean exists(DbBoardroom dbBoardroom) {
+    boolean exists(DbBoardroom dbBoardroom) {
         return boardroomRepository.existsById(dbBoardroom.getName());
     }
 

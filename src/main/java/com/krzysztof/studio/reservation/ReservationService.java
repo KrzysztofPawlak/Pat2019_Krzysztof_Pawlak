@@ -16,17 +16,17 @@ import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MIN_TIME_IN_MINU
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
-public class ReservationService {
+class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final BoardroomRepository boardroomRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, BoardroomRepository boardroomRepository) {
+    ReservationService(ReservationRepository reservationRepository, BoardroomRepository boardroomRepository) {
         this.reservationRepository = reservationRepository;
         this.boardroomRepository = boardroomRepository;
     }
 
-    public DbReservation create(DbReservation dbReservation) {
+    DbReservation create(DbReservation dbReservation) {
         if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation id already exists!");
         checkBoardroomExists(dbReservation);
         checkReservationPreConditions(dbReservation);
@@ -34,19 +34,19 @@ public class ReservationService {
         return reservationRepository.save(dbReservation);
     }
 
-    public List<DbReservation> read() {
+    List<DbReservation> read() {
         return reservationRepository.findAll();
     }
 
-    public DbReservation read(String id) {
+    DbReservation read(String id) {
         return reservationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No Reservations found!"));
     }
 
-    public void delete(String id) {
+    void delete(String id) {
         if (reservationRepository.existsById(id)) reservationRepository.deleteById(id);
     }
 
-    public void update(String id, DbReservation dbReservationUpdated) {
+    void update(String id, DbReservation dbReservationUpdated) {
         if (!reservationRepository.existsById(id)) return;
         checkBoardroomExists(dbReservationUpdated);
         checkReservationPreConditions(dbReservationUpdated);
@@ -59,7 +59,7 @@ public class ReservationService {
             throw new ResourceNotFoundException("Specified boardroom is not exists!");
     }
 
-    public boolean exists(DbReservation dbReservation) {
+    private boolean exists(DbReservation dbReservation) {
         return reservationRepository.existsById(dbReservation.getId());
     }
 

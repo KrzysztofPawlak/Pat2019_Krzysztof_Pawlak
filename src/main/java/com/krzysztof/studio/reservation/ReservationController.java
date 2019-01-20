@@ -16,38 +16,38 @@ import static com.krzysztof.studio.config.ApiConfig.RESERVATIONS;
 
 @RestController
 @RequestMapping(value = RESERVATIONS)
-public class ReservationController {
+class ReservationController {
 
     private final ReservationService reservationService;
 
-    public ReservationController(ReservationService reservationService) {
+    ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Reservation reservation) {
+    ResponseEntity<?> create(@RequestBody @Valid Reservation reservation) {
         return new ResponseEntity<>(convertToView(reservationService.create(convertToDb(reservation))), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Reservation> read() {
+    List<Reservation> read() {
         var reservations = new ArrayList<Reservation>();
         reservationService.read().stream().forEach(dbReservation -> reservations.add(convertToView(dbReservation)));
         return reservations;
     }
 
     @GetMapping(value="{name}")
-    public Reservation read(@PathVariable String name) {
+    Reservation read(@PathVariable String name) {
         return convertToView(reservationService.read(name));
     }
 
     @PutMapping(value = "{name}")
-    public void update(@PathVariable String name, @RequestBody @Valid Reservation reservation) {
+    void update(@PathVariable String name, @RequestBody @Valid Reservation reservation) {
         reservationService.update(name, convertToDb(reservation));
     }
 
     @DeleteMapping(value = "{name}")
-    public void delete(@PathVariable String name) {
+    void delete(@PathVariable String name) {
         reservationService.delete(name);
     }
 
