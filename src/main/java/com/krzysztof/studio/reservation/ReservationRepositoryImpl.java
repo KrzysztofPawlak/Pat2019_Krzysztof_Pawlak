@@ -20,14 +20,17 @@ class ReservationRepositoryImpl implements ReservationRepositoryCustom {
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var criteriaQuery = criteriaBuilder.createQuery(DbReservation.class);
         var reservationRoot = criteriaQuery.from(DbReservation.class);
+        var nameChild = reservationRoot.join("boardroom").get("name");
 
         // from: https://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
         // (StartA <= EndB) and (EndA >= StartB)
         var equationLeft = criteriaBuilder.lessThanOrEqualTo(reservationRoot.get("reservationFrom"), dbReservation.getReservationTo());
         var equationRight = criteriaBuilder.greaterThanOrEqualTo(reservationRoot.get("reservationTo"), dbReservation.getReservationFrom());
         var equation = criteriaBuilder.and(equationLeft, equationRight);
+        var predicateName = criteriaBuilder.equal(nameChild, dbReservation.getBoardroom().getName());
+        var finalCriteria = criteriaBuilder.and(equation, predicateName);
 
-        criteriaQuery.where(equation);
+        criteriaQuery.where(finalCriteria);
 
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
