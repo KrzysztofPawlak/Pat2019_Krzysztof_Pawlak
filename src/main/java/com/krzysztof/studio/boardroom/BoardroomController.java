@@ -27,7 +27,7 @@ public class BoardroomController {
     @Autowired
     private BoardroomService boardroomService;
 
-    @PostMapping(value = "/boardrooms")
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
         return new ResponseEntity<>(boardroomService.create(convertToDb(boardroom)), HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class BoardroomController {
     @GetMapping
     public List<Boardroom> read() {
         var boardrooms = new ArrayList<Boardroom>();
-        boardroomService.read().stream().forEach((dbBoardroom) -> boardrooms.add(convertToView(dbBoardroom)));
+        boardroomService.read().stream().forEach(dbBoardroom -> boardrooms.add(convertToView(dbBoardroom)));
         return boardrooms;
     }
 

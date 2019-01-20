@@ -30,7 +30,7 @@ public class ReservationController {
     @GetMapping
     public List<Reservation> read() {
         var reservations = new ArrayList<Reservation>();
-        reservationService.read().stream().forEach((dbReservation) -> reservations.add(convertToView(dbReservation)));
+        reservationService.read().stream().forEach(dbReservation -> reservations.add(convertToView(dbReservation)));
         return reservations;
     }
 

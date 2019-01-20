@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MAX_TIME_IN_HOUR;
@@ -35,9 +34,7 @@ public class ReservationService {
     }
 
     public List<DbReservation> read() {
-        var reservations = new ArrayList<DbReservation>();
-        reservationRepository.findAll().forEach(reservations::add);
-        return reservations;
+        return reservationRepository.findAll();
     }
 
     public DbReservation read(String id) {
