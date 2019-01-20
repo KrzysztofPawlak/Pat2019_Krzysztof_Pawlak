@@ -7,7 +7,6 @@ import com.krzysztof.studio.model.db.DbPhone;
 import com.krzysztof.studio.model.rest.Boardroom;
 import com.krzysztof.studio.model.rest.Equipment;
 import com.krzysztof.studio.model.rest.Phone;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,8 +23,11 @@ import static com.krzysztof.studio.config.ApiConfig.BOARDROOMS;
 @RequestMapping(value = BOARDROOMS)
 public class BoardroomController {
 
-    @Autowired
-    private BoardroomService boardroomService;
+    private final BoardroomService boardroomService;
+
+    public BoardroomController(BoardroomService boardroomService) {
+        this.boardroomService = boardroomService;
+    }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {

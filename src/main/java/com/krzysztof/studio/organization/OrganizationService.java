@@ -3,7 +3,6 @@ package com.krzysztof.studio.organization;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.db.DbOrganization;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class OrganizationService {
 
-    @Autowired
-    OrganizationRepository organizationRepository;
+    private final OrganizationRepository organizationRepository;
+
+    public OrganizationService(OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
+    }
 
     public DbOrganization create(DbOrganization dbOrganization) {
         if (exists(dbOrganization)) throw new ResourceAlreadyExistsException("Organizations already exists!");

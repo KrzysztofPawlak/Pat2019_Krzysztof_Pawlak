@@ -4,7 +4,6 @@ import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.db.DbBoardroom;
 import com.krzysztof.studio.organization.OrganizationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,11 +12,13 @@ import java.util.List;
 @Service
 public class BoardroomService {
 
-    @Autowired
-    BoardroomRepository boardroomRepository;
+    private final BoardroomRepository boardroomRepository;
+    private final OrganizationRepository organizationRepository;
 
-    @Autowired
-    OrganizationRepository organizationRepository;
+    public BoardroomService(BoardroomRepository boardroomRepository, OrganizationRepository organizationRepository) {
+        this.boardroomRepository = boardroomRepository;
+        this.organizationRepository = organizationRepository;
+    }
 
     public DbBoardroom create(DbBoardroom dbBoardroom) {
         if (exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");

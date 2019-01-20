@@ -6,7 +6,6 @@ import com.krzysztof.studio.config.error.model.ReservationConditionException;
 import com.krzysztof.studio.config.error.model.ResourceAlreadyExistsException;
 import com.krzysztof.studio.config.error.model.ResourceNotFoundException;
 import com.krzysztof.studio.model.db.DbReservation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -19,11 +18,13 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 @Service
 public class ReservationService {
 
-    @Autowired
-    ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
+    private final BoardroomRepository boardroomRepository;
 
-    @Autowired
-    BoardroomRepository boardroomRepository;
+    public ReservationService(ReservationRepository reservationRepository, BoardroomRepository boardroomRepository) {
+        this.reservationRepository = reservationRepository;
+        this.boardroomRepository = boardroomRepository;
+    }
 
     public DbReservation create(DbReservation dbReservation) {
         if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation id already exists!");

@@ -2,7 +2,6 @@ package com.krzysztof.studio.organization;
 
 import com.krzysztof.studio.model.db.DbOrganization;
 import com.krzysztof.studio.model.rest.Organization;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,11 @@ import static com.krzysztof.studio.config.ApiConfig.ORGANIZATIONS;
 @RequestMapping(value = ORGANIZATIONS)
 public class OrganizationController {
 
-    @Autowired
-    private OrganizationService organizationService;
+    private final OrganizationService organizationService;
+
+    public OrganizationController(OrganizationService organizationService) {
+        this.organizationService = organizationService;
+    }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
