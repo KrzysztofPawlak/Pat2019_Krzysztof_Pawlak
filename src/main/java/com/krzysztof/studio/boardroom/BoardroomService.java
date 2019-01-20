@@ -21,7 +21,9 @@ class BoardroomService {
     }
 
     DbBoardroom create(DbBoardroom dbBoardroom) {
-        if (exists(dbBoardroom)) throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        if (exists(dbBoardroom)) {
+            throw new ResourceAlreadyExistsException("Boardrooms already exists!");
+        }
         checkOrganizationExists(dbBoardroom);
         return boardroomRepository.save(dbBoardroom);
     }
@@ -37,11 +39,15 @@ class BoardroomService {
     }
 
     void delete(String name) {
-        if (boardroomRepository.existsById(name)) boardroomRepository.deleteById(name);
+        if (boardroomRepository.existsById(name)) {
+            boardroomRepository.deleteById(name);
+        }
     }
 
     void update(String name, DbBoardroom dbBoardroomUpdated) {
-        if (!boardroomRepository.existsById(name)) return;
+        if (!boardroomRepository.existsById(name)) {
+            return;
+        }
         checkOrganizationExists(dbBoardroomUpdated);
         boardroomRepository.save(dbBoardroomUpdated);
     }
@@ -51,7 +57,8 @@ class BoardroomService {
     }
 
     private void checkOrganizationExists(DbBoardroom dbBoardroom) {
-        if (!organizationRepository.existsById(dbBoardroom.getOrganization().getName()))
+        if (!organizationRepository.existsById(dbBoardroom.getOrganization().getName())) {
             throw new ResourceNotFoundException("Specified organization is not exists!");
+        }
     }
 }

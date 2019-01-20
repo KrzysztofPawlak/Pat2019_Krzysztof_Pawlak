@@ -15,7 +15,9 @@ public class PhoneInterfaceValidator implements ConstraintValidator<PhoneInterfa
 
     @Override
     public boolean isValid(String valueToValid, ConstraintValidatorContext constraintValidatorContext) {
-        if (valueToValid == null) return true;
+        if (valueToValid == null) {
+            return true;
+        }
         var enumValues = this.annotation.enumClass().getEnumConstants();
         return Arrays.stream(enumValues).anyMatch(enumValue -> valueToValid.equalsIgnoreCase(enumValue.toString()));
     }

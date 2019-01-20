@@ -27,7 +27,9 @@ class ReservationService {
     }
 
     DbReservation create(DbReservation dbReservation) {
-        if (exists(dbReservation)) throw new ResourceAlreadyExistsException("Reservation id already exists!");
+        if (exists(dbReservation)) {
+            throw new ResourceAlreadyExistsException("Reservation id already exists!");
+        }
         checkBoardroomExists(dbReservation);
         checkReservationPreConditions(dbReservation);
         checkReservationIsAvailable(dbReservation);
@@ -43,11 +45,15 @@ class ReservationService {
     }
 
     void delete(String id) {
-        if (reservationRepository.existsById(id)) reservationRepository.deleteById(id);
+        if (reservationRepository.existsById(id)) {
+            reservationRepository.deleteById(id);
+        }
     }
 
     void update(String id, DbReservation dbReservationUpdated) {
-        if (!reservationRepository.existsById(id)) return;
+        if (!reservationRepository.existsById(id)) {
+            return;
+        }
         checkBoardroomExists(dbReservationUpdated);
         checkReservationPreConditions(dbReservationUpdated);
         checkReservationIsAvailable(dbReservationUpdated);
@@ -55,8 +61,9 @@ class ReservationService {
     }
 
     private void checkBoardroomExists(DbReservation dbReservation) {
-        if (!boardroomRepository.existsById(dbReservation.getBoardroom().getName()))
+        if (!boardroomRepository.existsById(dbReservation.getBoardroom().getName())) {
             throw new ResourceNotFoundException("Specified boardroom is not exists!");
+        }
     }
 
     private boolean exists(DbReservation dbReservation) {
@@ -70,12 +77,15 @@ class ReservationService {
         var maxReservationTime = Duration.ofMinutes(Duration.ofHours(RESERVATION_MAX_TIME_IN_HOUR).toMinutes());
         var minReservationTime = Duration.ofMinutes(RESERVATION_MIN_TIME_IN_MINUTES);
 
-        if (begin.isAfter(end) && end.isBefore(begin))
+        if (begin.isAfter(end) && end.isBefore(begin)) {
             throw new ReservationConditionException("Reservation end time cannot be before start time.");
-        if (reservationTime.compareTo(maxReservationTime) >= 0)
+        }
+        if (reservationTime.compareTo(maxReservationTime) >= 0) {
             throw new ReservationConditionException("Exceeded reservation max time: " + RESERVATION_MAX_TIME_IN_HOUR + " hours.");
-        if (reservationTime.compareTo(minReservationTime) < 0)
+        }
+        if (reservationTime.compareTo(minReservationTime) < 0) {
             throw new ReservationConditionException("Reservation min time cannot be less than: " + RESERVATION_MIN_TIME_IN_MINUTES + " minutes.");
+        }
     }
 
     private void checkReservationIsAvailable(DbReservation dbReservation) {

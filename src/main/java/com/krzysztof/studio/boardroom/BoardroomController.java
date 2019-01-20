@@ -76,7 +76,9 @@ class BoardroomController {
         equipment.setId(dbEquipment.getId());
         equipment.setProjectorName(dbEquipment.getProjectorName());
         equipment.setPhoneAvailable(dbEquipment.isPhoneAvailable());
-        if (dbEquipment.isPhoneAvailable()) equipment.setPhone(convertToView(dbEquipment.getPhone()));
+        if (dbEquipment.isPhoneAvailable()) {
+            equipment.setPhone(convertToView(dbEquipment.getPhone()));
+        }
         return equipment;
     }
 
@@ -109,7 +111,9 @@ class BoardroomController {
         dbEquipment.setId(equipment.getId());
         dbEquipment.setProjectorName(equipment.getProjectorName());
         dbEquipment.setPhoneAvailable(equipment.isPhoneAvailable());
-        if (equipment.isPhoneAvailable()) dbEquipment.setPhone(convertToDb(equipment.getPhone()));
+        if (equipment.isPhoneAvailable()) {
+            dbEquipment.setPhone(convertToDb(equipment.getPhone()));
+        }
         return dbEquipment;
     }
 

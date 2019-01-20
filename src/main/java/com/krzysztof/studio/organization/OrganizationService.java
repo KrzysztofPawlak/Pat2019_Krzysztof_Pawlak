@@ -18,7 +18,9 @@ class OrganizationService {
     }
 
     DbOrganization create(DbOrganization dbOrganization) {
-        if (exists(dbOrganization)) throw new ResourceAlreadyExistsException("Organizations already exists!");
+        if (exists(dbOrganization)) {
+            throw new ResourceAlreadyExistsException("Organizations already exists!");
+        }
         return organizationRepository.save(dbOrganization);
     }
 
@@ -33,11 +35,15 @@ class OrganizationService {
     }
 
     void delete(String name) {
-        if (organizationRepository.existsById(name)) organizationRepository.deleteById(name);
+        if (organizationRepository.existsById(name)) {
+            organizationRepository.deleteById(name);
+        }
     }
 
     void update(String name, DbOrganization dbOrganizationUpdated) {
-        if (organizationRepository.existsById(name)) organizationRepository.save(dbOrganizationUpdated);
+        if (organizationRepository.existsById(name)) {
+            organizationRepository.save(dbOrganizationUpdated);
+        }
     }
 
     private boolean exists(DbOrganization dbOrganization) {
