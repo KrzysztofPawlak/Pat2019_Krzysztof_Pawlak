@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static com.krzysztof.studio.config.ApiConfig.ORGANIZATION_NAME_MAX_LENGTH;
-import static com.krzysztof.studio.config.ApiConfig.ORGANIZATION_NAME_MIN_LENGTH;
+import static com.krzysztof.studio.config.Constants.ORGANIZATION_NAME_MAX_LENGTH;
+import static com.krzysztof.studio.config.Constants.ORGANIZATION_NAME_MIN_LENGTH;
 
 public @Data class Organization {
 

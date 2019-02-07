@@ -6,8 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MAX_LENGTH;
-import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MIN_LENGTH;
+import static com.krzysztof.studio.config.Constants.RESERVATION_MAX_LENGTH;
+import static com.krzysztof.studio.config.Constants.RESERVATION_MIN_LENGTH;
 
 @Data
 public class Reservation {

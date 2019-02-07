@@ -11,8 +11,8 @@ import javax.validation.constraints.Positive;
 import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
-import static com.krzysztof.studio.config.ApiConfig.ACCEPTABLE_EXTERNAL_NUMBER_FORMAT;
-import static com.krzysztof.studio.config.ApiConfig.PHONE_MAX_INTERNAL_NUMBER;
+import static com.krzysztof.studio.config.Constants.ACCEPTABLE_EXTERNAL_NUMBER_FORMAT;
+import static com.krzysztof.studio.config.Constants.PHONE_MAX_INTERNAL_NUMBER;
 
 @Data
 public class Phone {

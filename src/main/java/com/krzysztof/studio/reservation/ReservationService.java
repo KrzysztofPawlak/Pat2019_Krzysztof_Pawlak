@@ -14,8 +14,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MAX_TIME_IN_HOUR;
-import static com.krzysztof.studio.config.ApiConfig.RESERVATION_MIN_TIME_IN_MINUTES;
+import static com.krzysztof.studio.config.Constants.RESERVATION_MAX_TIME_IN_HOUR;
+import static com.krzysztof.studio.config.Constants.RESERVATION_MIN_TIME_IN_MINUTES;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service

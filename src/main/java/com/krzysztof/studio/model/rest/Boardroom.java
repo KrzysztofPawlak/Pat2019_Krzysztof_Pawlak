@@ -8,8 +8,8 @@ import javax.validation.constraints.*;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_DEFAULT;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.krzysztof.studio.config.ApiConfig.*;
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOM_MAX_LEVEL;
+import static com.krzysztof.studio.config.Constants.*;
+import static com.krzysztof.studio.config.Constants.BOARDROOM_MAX_LEVEL;
 
 @Data
 public class Boardroom {

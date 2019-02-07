@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.krzysztof.studio.config.ApiConfig.BOARDROOMS;
+import static com.krzysztof.studio.config.Constants.BOARDROOMS;
 
 @Validated
 @RestController

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.krzysztof.studio.config.ApiConfig.RESERVATIONS;
+import static com.krzysztof.studio.config.Constants.RESERVATIONS;
 
 @RestController
 @RequestMapping(value = RESERVATIONS)

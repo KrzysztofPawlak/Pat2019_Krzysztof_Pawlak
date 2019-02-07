@@ -1,6 +1,6 @@
 package com.krzysztof.studio.config;
 
-public final class ApiConfig {
+public final class Constants {
 
     public static final int ORGANIZATION_NAME_MIN_LENGTH = 2;
     public static final int ORGANIZATION_NAME_MAX_LENGTH = 20;
