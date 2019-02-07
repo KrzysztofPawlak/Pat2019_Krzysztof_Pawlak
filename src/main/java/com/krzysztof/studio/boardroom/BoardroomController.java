@@ -23,7 +23,7 @@ class BoardroomController {
     }
 
     @PostMapping
-    ResponseEntity<?> create(@RequestBody @Valid Boardroom boardroom) {
+    ResponseEntity<Boardroom> create(@RequestBody @Valid Boardroom boardroom) {
         return new ResponseEntity<>(boardroomService.create(boardroom), HttpStatus.CREATED);
     }
 

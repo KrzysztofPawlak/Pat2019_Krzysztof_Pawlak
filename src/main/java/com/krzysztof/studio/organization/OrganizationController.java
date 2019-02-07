@@ -21,7 +21,7 @@ class OrganizationController {
     }
 
     @PostMapping
-    ResponseEntity<?> create(@RequestBody @Valid Organization organization) {
+    ResponseEntity<Organization> create(@RequestBody @Valid Organization organization) {
         return new ResponseEntity<>(organizationService.create(organization), HttpStatus.BAD_REQUEST);
     }
 
