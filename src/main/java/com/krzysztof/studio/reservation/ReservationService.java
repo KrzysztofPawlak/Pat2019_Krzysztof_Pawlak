@@ -11,8 +11,8 @@ import com.krzysztof.studio.model.rest.Reservation;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.krzysztof.studio.config.Constants.RESERVATION_MAX_TIME_IN_HOUR;
 import static com.krzysztof.studio.config.Constants.RESERVATION_MIN_TIME_IN_MINUTES;
@@ -41,9 +41,7 @@ class ReservationService {
     }
 
     List<Reservation> read() {
-        var reservations = new ArrayList<Reservation>();
-        reservationRepository.findAll().forEach(dbReservation -> reservations.add(convertToView(dbReservation)));
-        return reservations;
+        return reservationRepository.findAll().stream().map(dbReservation -> convertToView(dbReservation)).collect(Collectors.toList());
     }
 
     Reservation read(String id) {

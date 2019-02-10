@@ -6,8 +6,8 @@ import com.krzysztof.studio.model.db.DbOrganization;
 import com.krzysztof.studio.model.rest.Organization;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 class OrganizationService {
@@ -27,9 +27,7 @@ class OrganizationService {
     }
 
     List<Organization> read() {
-        var organizations = new ArrayList<Organization>();
-        organizationRepository.findAll().forEach(dbOrganization -> organizations.add(convertToView(dbOrganization)));
-        return organizations;
+        return organizationRepository.findAll().stream().map(dbOrganization -> convertToView(dbOrganization)).collect(Collectors.toList());
     }
 
     Organization read(String name) {

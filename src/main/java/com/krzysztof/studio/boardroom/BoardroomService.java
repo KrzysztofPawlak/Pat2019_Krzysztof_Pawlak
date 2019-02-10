@@ -12,8 +12,8 @@ import com.krzysztof.studio.model.rest.Phone;
 import com.krzysztof.studio.organization.OrganizationRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 class BoardroomService {
@@ -36,9 +36,7 @@ class BoardroomService {
     }
 
     List<Boardroom> read() {
-        var boardrooms = new ArrayList<Boardroom>();
-        boardroomRepository.findAll().forEach(dbBoardroom -> boardrooms.add(convertToView(dbBoardroom)));
-        return boardrooms;
+        return boardroomRepository.findAll().stream().map(dbBoardroom -> convertToView(dbBoardroom)).collect(Collectors.toList());
     }
 
     Boardroom read(String name) {
