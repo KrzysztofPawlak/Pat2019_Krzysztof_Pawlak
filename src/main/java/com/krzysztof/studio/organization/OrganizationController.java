@@ -22,7 +22,7 @@ class OrganizationController {
 
     @PostMapping
     ResponseEntity<Organization> create(@RequestBody @Valid Organization organization) {
-        return new ResponseEntity<>(organizationService.create(organization), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(organizationService.create(organization), HttpStatus.OK);
     }
 
     @GetMapping
